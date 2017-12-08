@@ -6,6 +6,7 @@ var ordinal = 0;
 var dataSize = 0;
 var blank = "[blank]";
 var sampleLabel;
+var answers = {};
 var labelsDefault = {
     "QKAPINGen": "DCATMQK /'Card_PIN related/'A_PIN _ Denial/'APIN generation",
     "QKChgEmailId": "SACQK/'Demographics/'Email Id _ Denial/'Change in e_mail ID procedure",
@@ -276,7 +277,16 @@ function actions(which) {
     console.log(which);
 
     var cancelHistory = false;
-    var origItem = ordinal;
+
+    if (sampleData[ordinal]) {
+        var currentThread = sampleData[ordinal].threadId;
+        if (!cancelHistory && which != 'undo') {
+            /*var $li = $('<li>').append(
+                currentThread + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+which+"'></use></svg>"
+            ).appendTo("ul.history");*/
+            answers[currentThread] = which;
+        }
+    };
 
     $('footer button.' + which).attr( "data-pressed", "1" );
     setTimeout(function() { $('footer button.' + which).attr( "data-pressed", "0" ); }, 200);
@@ -295,12 +305,19 @@ function actions(which) {
     };
     if (ordinal < 0) {ordinal = 0; cancelHistory = true};
     if (ordinal > dataSize) {ordinal = dataSize; cancelHistory = true};
+    
+    if (which == 'undo') {
+        answers[sampleData[ordinal].threadId] = '';
+    };
+    $('ul.history').empty();
+    $.each(answers, function(key, value) {
+        if (value.length) {
+            var $li = $('<li>').append(
+                key + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+value+"'></use></svg>"
+            ).appendTo("ul.history");
+        }
+    })
 
-    if (!cancelHistory && which != 'undo') {
-        var $li = $('<li>').append(
-          sampleData[origItem].threadId + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+which+"'></use></svg>"
-        ).appendTo("ul.history") 
-    }
 };
 
 function loadItem(which) {
