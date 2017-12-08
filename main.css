@@ -1,0 +1,307 @@
+body, html {
+    overflow: hidden;
+    font-family: sans-serif;
+}
+body {
+    padding: 0;
+    margin: 0;
+    color: #404040;
+    font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+input, button, textarea, select, pre {
+    font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+::-webkit-scrollbar               { width: 8px; height: 8px; overflow:visible }
+::-webkit-scrollbar-button        { height: 0; width: 0}
+::-webkit-scrollbar-track         { background-color: rgba(0, 0, 0, .04); border-width: 0 }
+::-webkit-scrollbar-track:hover   { background-color: rgba(0, 0, 0, .06)}
+::-webkit-scrollbar-track:active  { background-color: rgba(0, 0, 0, .08)}
+::-webkit-scrollbar-thumb         { background-color: rgba(0, 0, 0, .3); background-clip: padding-box; border: solid transparent; border-width: 1px; min-height: 25px; padding: 100px 0 0}
+::-webkit-scrollbar-thumb:hover   { background-color: rgba(0, 0, 0, .4) }
+::-webkit-scrollbar-thumb:active  { background-color: rgba(0, 0, 0, .5) }
+::-webkit-scrollbar-corner        { background: transparent }
+
+::-webkit-input-placeholder {
+    color: black !important;
+    opacity: .3;
+}
+:-moz-placeholder /* Firefox 18- */ {
+    color: black !important;
+    opacity: .3;
+}
+::-moz-placeholder /* Firefox 19+ */ {
+    color: black !important;
+    opacity: .3;
+}
+:-ms-input-placeholder {
+    color: #D0D0D0 !important;
+    opacity: 2;
+}
+pre {
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 550px
+}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.alltra {
+    transition: all .45s cubic-bezier(.19, 1, .22, 1);
+}
+* {
+    outline: 0;
+}
+.href, a {
+    color: #4CB7EF;
+    cursor: pointer;
+    font-weight: 600;
+}
+.lefted {
+    text-align: left;
+}
+.gray {
+    color: #45B6D8;
+    font-size: 12px;
+}
+.floleft {
+    float: left;
+}
+.floright {
+    float: right;
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.semibold {
+    font-weight: 600
+}
+.bold {
+    font-weight: 700
+}
+svg {
+    color: currentColor;
+    fill: currentColor;
+}
+
+
+
+nav {
+    position: absolute; left: 0; top: 0;
+    width: 200px; height: 100%;
+    background: white;
+    padding: 0 20px;
+    font-weight: 600
+}
+div.brand {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    padding-left: 40px;
+    color: #0FACF3;
+    letter-spacing: 4px;
+    margin: 20px 0;
+}
+div.brand svg {
+    position: absolute; left: 0; top: 0;
+    width: 30px; height: 30px;
+    background-color: #4FD364;
+    color: white;
+    border-radius: 50%;
+    padding: 4px;
+}
+nav hr {
+    display: block;
+    height: 0; overflow: hidden;
+    margin: 0 -20px 20px -20px;
+    padding: 0;
+    border: 0;
+    border-top: 2px solid #F6F6F6
+}
+nav ul {
+    margin: 20px 0;
+}
+nav ul li {
+    line-height: 30px;
+    cursor: pointer;
+    margin-left: 30px;
+    padding-left: 10px;
+    border-radius: 3px;
+}
+nav ul li:hover {
+    background: #F0F0F0
+}
+
+.account {
+    position: absolute; right: 50px; top: 20px;
+    font-weight: 600;
+    line-height: 30px;
+}
+.account img {
+    width: 30px; height: 30px; margin-right: 10px;
+    float: left;
+    border-radius: 50%;
+}
+footer {
+    height: 180px;
+    position: fixed; left: 0; bottom: 3px;
+    width: 100%;
+    text-align: center;
+}
+footer .inner {
+    background: rgba(255, 255, 255, .95);
+    padding: 20px 25px 10px 25px;
+    border-radius: 20px;
+    display: inline-block;
+}
+footer button {
+    width: 100px; height: 100px;
+}
+footer svg {
+    width: 40px; height: 40px;
+}
+button{
+    color: white;
+    background-color: #B9B9B9;
+    font-weight: 600;
+    border: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background .2s cubic-bezier(.19, 1, .22, 1);
+}
+button.accept {
+    background-color: #4FD364;
+}
+button.reject {
+    background-color: #F74C4A;
+}
+button[data-pressed='1'] {
+    background-color: #204060;
+}
+.pageouter {
+    padding: 20px;
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+.pageinner {
+    text-align: center;
+    padding: 8% 200px 200px 200px;
+}
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+#dataitem {
+    display: inline-block;
+    min-width: 350px;
+    min-height: 300px;
+    border-radius: 3px;
+    box-shadow: 0 0 .1rem .1rem rgba(0, 0, 0, .1);
+    text-align: left;
+    padding: 25px;
+    line-height: 1.5;
+}
+#dataitem td {
+    vertical-align: top;
+    padding: 15px 10px 15px 0;
+}
+td.la {
+    color: #F56476;
+    font-weight: 600
+}
+.labels span:after {
+    content: "|";
+    color: lightgray;
+    padding: 0 10px;
+}
+.labels span:last-child:after {
+    content: ""
+}
+
+.copyr {
+    position: absolute; bottom: 20px; left: 20px;
+    font-weight: 400;
+    font-size: 13px;
+}
+#prog {
+    width: 414px;
+    display: inline-block;
+    font-size: 13px;
+}
+
+meter,
+progress {
+    width: 100%;
+    height: 8px;
+    margin: 10px 0 20px 0;
+    /*-moz-appearance: none;
+    -webkit-appearance: none;*/
+}
+meter::-webkit-meter-bar {
+    box-shadow: 0;
+    background-color: white;
+}
+meter::-moz-meter-bar {
+    box-shadow: 0;
+    background-color: white;
+}
+meter::-webkit-meter-optimum-value {
+    background: #0FACF3
+}
+meter::-moz-meter-optimum {
+    background: #0FACF3
+}
+
+
+
+
+
+
+
+
+  
+progress {
+
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+
+/* Firefox */
+border: none;
+background: #EEE;
+border-radius: 4px;
+}
+
+progress::-webkit-progress-bar {
+background: #EEE;
+border-radius: 4px;
+}
+
+progress::-webkit-progress-value {
+background-color: #0FACF3;
+border-radius: 4px;
+transition: all .55s cubic-bezier(.19, 1, .22, 1);
+}
+
+progress::-moz-progress-bar {
+background-color: #0FACF3;
+border-radius: 4px;
+transition: all .55s cubic-bezier(.19, 1, .22, 1);
+}
+  
+  
+  
