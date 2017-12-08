@@ -255,8 +255,8 @@ function initialize() {
     });
 
     $(document).keydown(function(event) {
-        keyed(event.keyCode);
-        if (event.keyCode == 8) {
+        if (event.keyCode == 8 || event.keyCode == 32 || event.keyCode == 88 || event.keyCode == 65) {
+            keyed(event.keyCode);
             event.preventDefault();
             event.stopPropagation();
         }
