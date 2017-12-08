@@ -275,6 +275,9 @@ function keyed(which) {
 function actions(which) {
     console.log(which);
 
+    var cancelHistory = false;
+    var origItem = ordinal;
+
     $('footer button.' + which).attr( "data-pressed", "1" );
     setTimeout(function() { $('footer button.' + which).attr( "data-pressed", "0" ); }, 200);
 
@@ -290,8 +293,14 @@ function actions(which) {
     if (which == 'undo') {
         ordinal--
     };
-    if (ordinal < 0) ordinal = 0;
-    if (ordinal > dataSize) ordinal = dataSize;
+    if (ordinal < 0) {ordinal = 0; cancelHistory = true};
+    if (ordinal > dataSize) {ordinal = dataSize; cancelHistory = true};
+
+    if (!cancelHistory && which != 'undo') {
+        var $li = $('<li>').append(
+          sampleData[origItem].threadId + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+which+"'></use></svg>"
+        ).appendTo("ul.history") 
+    }
 };
 
 function loadItem(which) {
