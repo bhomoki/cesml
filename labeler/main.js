@@ -277,10 +277,16 @@ function actions(which) {
     //console.log(which);
     $('footer button.' + which).attr( "data-pressed", "1" );
     setTimeout(function() { $('footer button.' + which).attr( "data-pressed", "0" ); }, 200);
-    
+
     if (sampleData[ordinal]) {
         var currentThread = sampleData[ordinal].threadId;
         if (which != 'undo') {
+            $.each(answers, function(key, value) {
+                if (value.threadId == currentThread) {
+                    answers.splice(key, 1);
+                    return false
+                };
+            });
             answers.push({threadId: currentThread, answer: which});
         }
     };
@@ -290,7 +296,7 @@ function actions(which) {
     };
     $('ul.history').empty();
     $.each(answers, function(key, value) {    
-        var $li = $('<li>').append(
+        var $li = $('<li data-threadid="'+value.threadId+'" onclick="lookupItem($(this))">').append(
             value.threadId + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+value.answer+"'></use></svg>"
         ).appendTo("ul.history");
     });
@@ -311,6 +317,17 @@ function actions(which) {
     });
     if (found)
         ordinal = sampleData.length
+};
+
+function lookupItem(which) {
+    var thisThreadid = which.data( "threadid" );
+    $.each(sampleData, function(key, value) {
+        if (thisThreadid == value.threadId) {
+            ordinal = key;
+            loadItem(key);
+            return false;
+        }
+    });
 };
 
 function loadItem(which) {
@@ -344,6 +361,7 @@ function loadItem(which) {
 
     $('#prog .vals').text(answers.length + " of " + dataSize + " done");
     $('#progmeter').val(answers.length / dataSize);
+    $('#historylabel').toggleClass('hidden', !answers.length);
 };
 
 function getLastLabel(longLabel) {

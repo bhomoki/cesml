@@ -93,6 +93,9 @@ svg {
     color: currentColor;
     fill: currentColor;
 }
+.hidden {
+    display: none
+}
 
 
 
@@ -279,11 +282,11 @@ ul.history {
 ul.history li {
     padding-left: 10px;
     border-radius: 3px;
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 ul.history li:hover {
-    /*color: white;
-    background: #0FACF3*/
+    color: white;
+    background: #0FACF3
 }
 
 
@@ -292,6 +295,14 @@ ul.history li:hover {
     width: 16px; height: 16px;
 }
 
+
+#historylabel {
+    text-transform: uppercase;
+    margin: 0 0 10px 40px;
+    font-size: 13px;
+    font-weight: 700;
+    color: gray
+}
 
 
   
