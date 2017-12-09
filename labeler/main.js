@@ -6,7 +6,7 @@ var ordinal = 0;
 var dataSize = 0;
 var blank = "[blank]";
 var sampleLabel;
-var answers = {};
+var answers = [];
 var labelsDefault = {
     "QKAPINGen": "DCATMQK /'Card_PIN related/'A_PIN _ Denial/'APIN generation",
     "QKChgEmailId": "SACQK/'Demographics/'Email Id _ Denial/'Change in e_mail ID procedure",
@@ -274,50 +274,43 @@ function keyed(which) {
 };
 
 function actions(which) {
-    console.log(which);
-
-    var cancelHistory = false;
-
-    if (sampleData[ordinal]) {
-        var currentThread = sampleData[ordinal].threadId;
-        if (!cancelHistory && which != 'undo') {
-            /*var $li = $('<li>').append(
-                currentThread + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+which+"'></use></svg>"
-            ).appendTo("ul.history");*/
-            answers[currentThread] = which;
-        }
-    };
-
+    //console.log(which);
     $('footer button.' + which).attr( "data-pressed", "1" );
     setTimeout(function() { $('footer button.' + which).attr( "data-pressed", "0" ); }, 200);
-
-    if (which == 'accept') {
-        ordinal++
-    };
-    if (which == 'reject') {
-        ordinal++
-    };
-    if (which == 'ignore') {
-        ordinal++
-    };
-    if (which == 'undo') {
-        ordinal--
-    };
-    if (ordinal < 0) {ordinal = 0; cancelHistory = true};
-    if (ordinal > dataSize) {ordinal = dataSize; cancelHistory = true};
     
+    if (sampleData[ordinal]) {
+        var currentThread = sampleData[ordinal].threadId;
+        if (which != 'undo') {
+            answers.push({threadId: currentThread, answer: which});
+        }
+    };
+
     if (which == 'undo') {
-        answers[sampleData[ordinal].threadId] = '';
+        answers.splice(-1, 1)
     };
     $('ul.history').empty();
-    $.each(answers, function(key, value) {
-        if (value.length) {
-            var $li = $('<li>').append(
-                key + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+value+"'></use></svg>"
-            ).appendTo("ul.history");
+    $.each(answers, function(key, value) {    
+        var $li = $('<li>').append(
+            value.threadId + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+value.answer+"'></use></svg>"
+        ).appendTo("ul.history");
+    });
+    var found = false;
+    $.each(sampleData, function(key, value) {
+        found = false;
+        var ithread = sampleData[key].threadId;
+        $.each(answers, function(ikey, ivalue) {    
+            if (ithread == ivalue.threadId) {
+                found = true;
+                return false
+            }
+        }); 
+        if (!found) {
+            ordinal = key;
+            return false
         }
-    })
-
+    });
+    if (found)
+        ordinal = sampleData.length
 };
 
 function loadItem(which) {
@@ -349,8 +342,8 @@ function loadItem(which) {
         ).appendTo('#datatable');
     };
 
-    $('#prog .vals').text(ordinal + " of " + dataSize + " done");
-    $('#progmeter').val(ordinal / dataSize);
+    $('#prog .vals').text(answers.length + " of " + dataSize + " done");
+    $('#progmeter').val(answers.length / dataSize);
 };
 
 function getLastLabel(longLabel) {
