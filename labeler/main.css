@@ -146,7 +146,6 @@ nav ul.menu li {
 nav ul.menu li:hover {
     background: #F0F0F0
 }
-
 .account {
     position: absolute; right: 50px; top: 20px;
     font-weight: 600;
@@ -317,7 +316,7 @@ ul.options li:hover {
 
 #historylabel {
     text-transform: uppercase;
-    margin: 0 0 10px 40px;
+    margin: 40px 0 10px 40px;
     font-size: 13px;
     font-weight: 700;
     color: gray
