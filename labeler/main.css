@@ -270,7 +270,8 @@ meter::-moz-meter-optimum {
     background: #0facf3
 }
 
-ul.history {
+ul.history,
+ul.options {
     max-height: calc(100vh - 300px);
     overflow: hidden;
     overflow-y: auto;
@@ -279,12 +280,18 @@ ul.history {
     font-weight: 400;
     margin-left: 30px;
 }
-ul.history li {
+ul.options {
+    max-height: 100%
+}
+ul.history li,
+ul.options li {
     padding-left: 10px;
     border-radius: 3px;
     cursor: pointer;
+    white-space: nowrap;
 }
-ul.history li:hover {
+ul.history li:hover,
+ul.options li:hover {
     color: white;
     background: #0FACF3
 }
@@ -307,7 +314,6 @@ ul.history li:hover {
 
   
 progress {
-
 -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
@@ -337,3 +343,10 @@ transition: all .55s cubic-bezier(.19, 1, .22, 1);
   
   
   
+
+#drawer {
+    position: fixed; top: 100px; right: 20px; bottom: 0; z-index: 0;
+    width: 200px;
+    overflow: hidden;
+    overflow-y: auto;
+}

@@ -243,27 +243,42 @@ var sampleData =
   }
  ];
 
+var phase = parseInt(queryObj().ph) || 1;
+
 
 
 function initialize() {
+    $('#ph').text(phase);
 
-    dataSize = sampleData.length;
+    if (phase == 1) {
+        dataSize = sampleData.length;
+        $('footer button').mousedown(function (that) {
+            var whichButton = $(that.currentTarget)[0].className;
+            actions(whichButton);
+            loadItem(ordinal);
+        });
 
-    $('footer button').mousedown(function (that) {
-        var whichButton = $(that.currentTarget)[0].className;
-        actions(whichButton);
+        $(document).keydown(function(event) {
+            if (event.keyCode == 8 || event.keyCode == 32 || event.keyCode == 88 || event.keyCode == 65) {
+                keyed(event.keyCode);
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
         loadItem(ordinal);
-    });
-
-    $(document).keydown(function(event) {
-        if (event.keyCode == 8 || event.keyCode == 32 || event.keyCode == 88 || event.keyCode == 65) {
-            keyed(event.keyCode);
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    });
-
-    loadItem(ordinal);
+    };
+    if (phase == 2) {
+        sampleData = sampleData.splice(15, 100)
+        dataSize = sampleData.length;
+        $.each(labelsDefault, function(key, value) {    
+            var $li = $('<li data-labelid="'+value.key+'" onclick="addLabel($(this))">').append(
+                key + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+value+"'></use></svg>"
+            ).appendTo("ul.options");
+        });
+        loadItem(ordinal);
+        $('#buttons').addClass('hidden');
+        $('#instr').removeClass('hidden');
+    }
 };
 
 function keyed(which) {
@@ -355,7 +370,7 @@ function loadItem(which) {
     else {
         var $tr = $('<tr>').append(
             $('<td class="la">').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),
-            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg></pre>")
+            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg<br><br><a href='?ph=2'>Start phase #2</a></pre>")
         ).appendTo('#datatable');
     };
 
@@ -417,3 +432,11 @@ function postData (teachNum, dataURL) {
     });
 };
 
+function queryObj() {
+    search = location.search;
+    return search.substring(1).split("&").reduce(function(result, value) {
+      var parts = value.split('=');
+      if (parts[0]) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+      return result;
+    }, {})
+};

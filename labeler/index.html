@@ -55,6 +55,11 @@
         <img src="user.png">Jane Doe
     </div>
 
+    <div id="drawer">
+        <ul class="options">
+        </ul>
+    </div>
+
     <div class="pageouter">
         <div class="pageinner">
             <div id="dataitem">
@@ -87,21 +92,24 @@
     <footer>
         <div class="inner">
             <div id="prog" class="clearfix">
-                <div class="floleft">Your progress, phase #1 of 4</div><div class="vals floright"></div>
+                <div class="floleft">Your progress, phase #<span id='ph'></span> of 4</div><div class="vals floright"></div>
                 <progress value="0" max="1" id="progmeter"></progress><br>
             </div><br>
-            <button title="accept (key: A)" aria-label="accept (key: A)" class="accept">
-                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#accept"></use></svg>
-            </button>
-            <button title="reject (key: X)" aria-label="reject (key: X)" class="reject">
-                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#reject"></use></svg>
-            </button>
-            <button title="ignore (key: SPACE)" aria-label="ignore (key: SPACE)" class="ignore">
-                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ignore"></use></svg>
-            </button>
-            <button title="undo (key: BACKSPACE, DEL)" aria-label="undo (key: BACKSPACE, DEL)" class="undo">
-                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#undo"></use></svg>
-            </button>
+            <span id='buttons'>
+                <button title="accept (key: A)" aria-label="accept (key: A)" class="accept">
+                    <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#accept"></use></svg>
+                </button>
+                <button title="reject (key: X)" aria-label="reject (key: X)" class="reject">
+                    <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#reject"></use></svg>
+                </button>
+                <button title="ignore (key: SPACE)" aria-label="ignore (key: SPACE)" class="ignore">
+                    <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ignore"></use></svg>
+                </button>
+                <button title="undo (key: BACKSPACE, DEL)" aria-label="undo (key: BACKSPACE, DEL)" class="undo">
+                    <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#undo"></use></svg>
+                </button>
+            </span>
+            <span id='instr' class="hidden">Pick an annotation label from the right side.</span>
         </div>
 
     </footer>
