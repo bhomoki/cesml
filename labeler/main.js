@@ -397,7 +397,7 @@ function loadItem(which) {
     else {
         var $tr = $('<tr>').append(
             $('<td class="la">').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),
-            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg<br><br><a href='?ph="+(phase + 1)+"'>Start phase #"+(phase + 1)+" of 4</a></pre>")
+            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg><br><br><a href='?ph="+(phase + 1)+"'>Start phase #"+(phase + 1)+" of 4</a></pre>")
         ).appendTo('#datatable');
     };
 
