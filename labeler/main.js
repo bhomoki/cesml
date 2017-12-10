@@ -271,8 +271,8 @@ function initialize() {
         sampleData = sampleData.splice(15, 100)
         dataSize = sampleData.length;
         $.each(labelsDefault, function(key, value) {    
-            var $li = $('<li data-labelid="'+value.key+'" onclick="addLabel($(this))">').append(
-                key + "<svg role='img' class='smallicon'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#"+value+"'></use></svg>"
+            var $li = $('<li data-labelid="'+key+'" onclick="addLabel($(this))" title="'+value+'">').append(
+                '<span class="semibold">' + key + "</span><br>" + getLastLabel(value)
             ).appendTo("ul.options");
         });
         loadItem(ordinal);
@@ -309,6 +309,29 @@ function actions(which) {
     if (which == 'undo') {
         answers.splice(-1, 1)
     };
+
+    buildHistory();
+};
+
+function addLabel(which) {
+    var newLabel = which.data( "labelid" );
+    if (sampleData[ordinal]) {
+        var currentThread = sampleData[ordinal].threadId;
+        sampleData[ordinal].new_label = sanitizeLabels(newLabel);
+        $.each(answers, function(key, value) {
+            if (value.threadId == currentThread) {
+                answers.splice(key, 1);
+                return false
+            };
+        });
+        answers.push({threadId: sampleData[ordinal].threadId, answer: newLabel});
+    };
+
+    buildHistory();
+    loadItem(ordinal);
+};
+
+function buildHistory() {
     $('ul.history').empty();
     $.each(answers, function(key, value) {    
         var $li = $('<li data-threadid="'+value.threadId+'" onclick="lookupItem($(this))">').append(
@@ -351,6 +374,10 @@ function loadItem(which) {
     
     if (singleItem) {
         $.each(singleItem, function(key, value) {
+            if (phase == 2) {
+                if (key == 'labels' || key == 'intent')
+                    return true
+            };
             $.each(labelsDefault, function(ikey, ivalue) {
                 if (key == 'intent') {
                     if (value.toLowerCase() == getLastLabel(ivalue).toLowerCase()) {
@@ -363,14 +390,14 @@ function loadItem(which) {
             };
             var $tr = $('<tr>').append(
                 $('<td class="la">').text(key),
-                $('<td class="' + (key == 'intent' || key == 'labels' ? 'field labels' : 'field') + '">').html("<pre>" + value + "</pre>")
+                $('<td class="' + (key == 'intent' || key == 'labels' || key == 'new_label' ? 'field labels' : 'field') + '">').html("<pre>" + value + "</pre>")
             ).appendTo('#datatable');
         });
     }
     else {
         var $tr = $('<tr>').append(
             $('<td class="la">').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),
-            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg<br><br><a href='?ph=2'>Start phase #2</a></pre>")
+            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg<br><br><a href='?ph="+(phase + 1)+"'>Start phase #"+(phase + 1)+"</a></pre>")
         ).appendTo('#datatable');
     };
 
