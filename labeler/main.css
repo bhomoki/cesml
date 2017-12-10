@@ -354,7 +354,7 @@ transition: all .55s cubic-bezier(.19, 1, .22, 1);
   
 
 #drawer {
-    position: fixed; top: 100px; right: 20px; bottom: 0; z-index: 0;
+    position: fixed; top: 100px; right: 40px; bottom: 0; z-index: 0;
     width: 240px;
     overflow: hidden;
     overflow-y: auto;
