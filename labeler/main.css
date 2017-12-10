@@ -197,7 +197,7 @@ button[data-pressed='1'] {
 .pageouter {
     padding: 20px;
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     max-height: 100vh;
 }
 .pageinner {
