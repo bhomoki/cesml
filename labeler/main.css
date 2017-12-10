@@ -158,12 +158,13 @@ nav ul.menu li:hover {
 }
 footer {
     height: 180px;
-    position: fixed; left: 0; bottom: 3px; z-index: 1;
-    width: 100%;
+    position: fixed; left: 0; right: 10px; bottom: 0; z-index: 3;
     text-align: center;
+    border-top: 1px solid #F0F0F0;
+    background: rgba(255, 255, 255, .95)
 }
 footer .inner {
-    background: rgba(255, 255, 255, .95);
+    /*background: rgba(255, 255, 255, .95);*/
     padding: 20px 25px 10px 25px;
     border-radius: 20px;
     display: inline-block;
@@ -271,7 +272,7 @@ meter::-moz-meter-optimum {
 
 ul.history,
 ul.options {
-    max-height: calc(100vh - 300px);
+    max-height: calc(100vh - 320px);
     overflow: hidden;
     overflow-y: auto;
     line-height: 170%;
