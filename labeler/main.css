@@ -101,7 +101,7 @@ svg {
 
 
 nav {
-    position: absolute; left: 0; top: 0; z-index: 2;
+    position: fixed; left: 0; top: 0; z-index: 2;
     width: 260px; height: 100%;
     background: white;
     padding: 0 20px;
@@ -148,7 +148,7 @@ nav ul.menu li:hover {
     background: #F0F0F0
 }
 .account {
-    position: absolute; right: 50px; top: 20px;
+    position: fixed; right: 50px; top: 20px;
     font-weight: 600;
     line-height: 30px;
 }
