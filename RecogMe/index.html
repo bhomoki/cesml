@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>RecogMe</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="main.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
+    
+
+    <style>
+            body, html {
+                overflow: hidden;
+                overflow-y: auto;
+                font-family: sans-serif;
+            }
+            body {
+                padding: 20px;
+                margin: 0;
+                text-align: center;
+                color: #555555;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                font-size: 16px;
+            }
+            input, button, textarea, select {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                font-size: 16px;
+            }
+            *, *:before, *:after {
+                box-sizing: border-box;
+            }
+            ::-webkit-scrollbar               { width: 12px; height: 12px; overflow:visible }
+            ::-webkit-scrollbar-button        { height: 0; width: 0}
+            ::-webkit-scrollbar-track         { background-color: rgba(0, 0, 0, .04); border-width: 0 }
+            ::-webkit-scrollbar-track:hover   { background-color: rgba(0, 0, 0, .06)}
+            ::-webkit-scrollbar-track:active  { background-color: rgba(0, 0, 0, .08)}
+            ::-webkit-scrollbar-thumb         { background-color: rgba(169, 182, 216, .3); background-clip: padding-box; border: solid transparent; border-width: 1px; min-height: 25px; padding: 100px 0 0}
+            ::-webkit-scrollbar-thumb:hover   { background-color: rgba(169, 182, 216, .4) }
+            ::-webkit-scrollbar-thumb:active  { background-color: rgba(169, 182, 216, .5) }
+            ::-webkit-scrollbar-corner        { background: transparent }
+
+            ::-webkit-input-placeholder {
+                color: black !important;
+                opacity: .3;
+            }
+            :-moz-placeholder /* Firefox 18- */ {
+                color: black !important;
+                opacity: .3;
+            }
+            ::-moz-placeholder /* Firefox 19+ */ {
+                color: black !important;
+                opacity: .3;
+            }
+            :-ms-input-placeholder {
+                color: #D0D0D0 !important;
+                opacity: 2;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .alltra {
+                transition: all .45s cubic-bezier(.19, 1, .22, 1);
+            }
+            * {
+                outline: 0;
+            }
+            .href, a {
+                color: #4CB7EF;
+                cursor: pointer;
+                font-weight: 600;
+            }
+            .lefted {
+                text-align: left;
+            }
+            .gray {
+                color: #45B6D8;
+                font-size: 12px;
+            }
+            .floleft {
+                float: left;
+            }
+            .floright {
+                float: right;
+            }
+            .clearfix:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+
+            div.brand {
+                font-family: 'Architects Daughter';
+                font-weight: 300;
+                font-size: 50px;
+                margin: 0;
+                color: rgba(169, 184, 216, .6);
+                letter-spacing: 0;
+                /*text-shadow: 20px 20px 80px rgba(169, 184, 216, .4), -20px -20px 80px rgba(169, 184, 216, .4),
+                             20px -20px 80px rgba(169, 184, 216, .4), -20px 20px 80px rgba(169, 184, 216, .4);*/
+            }
+
+            #canvasSignature {
+                margin: 50px 0 30px 0;
+                box-shadow: 0 0 200px rgba(169, 184, 216, .3);
+                width: 420px;
+                height: 420px;
+            }
+
+            #tools {
+                width: 420px;
+                margin: 0 auto 30px auto;
+            }
+
+            button {
+                /*position: relative; z-index: 1;*/
+                color: rgba(169, 184, 216, .8);
+                background: white;
+                font-weight: 600;
+                border-radius: 20px;
+                border: 1px solid rgba(169, 184, 216, .6);
+                height: 40px; line-height: 36px;
+                padding: 0 20px;
+                cursor: pointer;
+            }
+            button:not(:first-child) {
+                margin-left: 5px
+            }
+            button:hover {
+                border: 1px solid rgba(169, 184, 216, 0);
+                background: rgba(169, 184, 216, .6);
+                color: white;
+            }
+            #nums {
+                width: 420px;
+                margin: 0 auto;
+                transform: translate(0, -30px);
+                height: 0; overflow: hidden;
+                opacity: 0;
+            }
+            #nums.on {
+                height: auto; 
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+            #nums button {
+                margin-left: 2px;
+                width: 40px;
+                padding: 0;
+                float: left;
+                display: none
+            }
+            #answer {
+                position: absolute; z-index: 1;
+                left: calc(50% + 230px); top: 280px;
+                font-size: 100px;
+                color: #5676B6;
+            }
+            #userInput {
+                border: 1px solid rgba(169, 184, 216, .6);
+                height: 40px;
+                border-radius: 3px;
+                color: rgba(169, 184, 216, .8);
+                font-weight: 600;
+                background: white;
+                padding: 0 10px;
+                width: 100px;
+                box-shadow: inset 0 3px 3px rgba(169, 184, 216, .3);
+            }
+    </style>
+</head>
+ 
+<body>
+    <div class="brand">RecogMe</div>
+
+    <canvas id="canvasSignature" width="420px" height="420px"></canvas>
+    <div id="answer"></div>
+
+    <div id="tools" class="clearfix">
+        <button class="floleft alltra" onclick="query()">Query</button>
+        <button class="floleft alltra" onclick="teach()">Teach</button>
+        <button class="floright alltra" onclick="clearCanvas()">Clear</button>
+    </div>
+
+    <div id="nums" class="alltra clearfix">
+        <button>0</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <input id="userInput">
+    </div>
+
+    <img id="saved">
+   
+</body>
+</html> 

@@ -1,0 +1,80 @@
+<html>
+<head>
+<script>
+sampleRate=48000
+function initializeRecorder(stream){
+   audio_context = new AudioContext;
+   sampleRate = audio_context.sampleRate;
+   var audioInput = audio_context.createMediaStreamSource(stream);
+
+   console.log("Created media stream.");
+
+   var bufferSize = 16384;
+   // record only 1 channel
+   var recorder = audio_context.createScriptProcessor(bufferSize, 1, 1);
+   // specify the processing function
+   recorder.onaudioprocess = recorderProcess;
+   // connect stream to our recorder
+   audioInput.connect(recorder);
+   // connect our recorder to the previous destination
+   recorder.connect(audio_context.destination);
+}
+function recorderProcess(e) {
+    var left = e.inputBuffer.getChannelData(0);
+    ws.send(convertFloat32ToInt16(left));
+}
+function convertFloat32ToInt16(buffer) {
+  l = buffer.length;
+  buf = new Int16Array(l);
+  while (l--) {
+    buf[l] = Math.min(1, buffer[l])*0x7FFF;
+  }
+  return buf.buffer;
+}
+function errorCallback(error){
+  console.log(error);
+}
+
+var ws=""
+function start(){
+  navigator.getUserMedia({audio: true, video: false}, initializeRecorder, function(e) {
+   console.log('No live audio input: ' + e);
+  });
+
+
+ws = new WebSocket('ws://192.168.224.238:9000/demosocket');
+
+
+ws.onopen = function(evt) {
+  console.log('Connected to websocket.');
+
+  // First message: send the sample rate
+  ws.send(sampleRate);
+
+  ws.send("ChangeFrame:".concat(document.getElementById("frame_number").value));
+
+  ws.onmessage = function (event) {
+  document.getElementById("speaker").innerHTML = event.data;
+  }
+}
+
+}
+
+function change(){
+  ws.send("ChangeFrame:".concat(document.getElementById("frame_number").value));
+
+
+}
+
+
+</script>
+</head>
+<body onload="start()">
+Predict Frame(n x 330ms):
+<input type="number" id="frame_number" min="1" max="10" onchange="change()" value="3">
+<br>
+Speaker:
+<div name="speaker" id="speaker">
+</div>
+</body>
+</html>

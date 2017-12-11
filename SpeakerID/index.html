@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+    <title>Speaker ID</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <head>
+        <script src="recorder.js"></script>
+        <script src="main.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+        
+        <style>
+            body, html {
+                overflow: hidden;
+                overflow-y: auto;
+                font-family: sans-serif;
+            }
+            body {
+                padding: 10% 0 0 0;
+                margin: 0;
+                text-align: center;
+                color: #555555;
+                font-family: "Open Sans", "Helvetica neue", Helvetica, arial, Tahoma, sans-serif;
+                font-size: 16px;
+            }
+            input, button, textarea, select {
+                font-family: "Open Sans", "Helvetica neue", Helvetica, arial, Tahoma, sans-serif;
+                font-size: 16px;
+            }
+            *, *:before, *:after {
+                box-sizing: border-box;
+            }
+            ::-webkit-scrollbar               { width: 12px; height: 12px; overflow:visible }
+            ::-webkit-scrollbar-button        { height: 0; width: 0}
+            ::-webkit-scrollbar-track         { background-color: rgba(0, 0, 0, .04); border-width: 0 }
+            ::-webkit-scrollbar-track:hover   { background-color: rgba(0, 0, 0, .06)}
+            ::-webkit-scrollbar-track:active  { background-color: rgba(0, 0, 0, .08)}
+            ::-webkit-scrollbar-thumb         { background-color: rgba(69, 182, 216, .3); background-clip: padding-box; border: solid transparent; border-width: 1px; min-height: 25px; padding: 100px 0 0}
+            ::-webkit-scrollbar-thumb:hover   { background-color: rgba(69, 182, 216, .4) }
+            ::-webkit-scrollbar-thumb:active  { background-color: rgba(69, 182, 216, .5) }
+            ::-webkit-scrollbar-corner        { background: transparent }
+
+            ::-webkit-input-placeholder {
+                color: black !important;
+                opacity: .3;
+            }
+            :-moz-placeholder /* Firefox 18- */ {
+                color: black !important;
+                opacity: .3;
+            }
+            ::-moz-placeholder /* Firefox 19+ */ {
+                color: black !important;
+                opacity: .3;
+            }
+            :-ms-input-placeholder {
+                color: #D0D0D0 !important;
+                opacity: 2;
+            }
+            .clearfix:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .alltra {
+                transition: all .45s cubic-bezier(.19, 1, .22, 1);
+            }
+            * {
+                outline: 0;
+            }
+            .href, a {
+                color: #4CB7EF;
+                cursor: pointer;
+                font-weight: 600;
+            }
+            .lefted {
+                text-align: left;
+            }
+            .gray {
+                color: #45B6D8;
+                font-size: 12px;
+            }
+
+            .tagline button {
+                border: 0;
+                border-radius: 58px;
+                padding: 15px 50px;
+                color: white;
+                font-weight: 300;
+                font-size: 20px;
+                background: #7784C8;
+                background: linear-gradient(120deg, #8797D5 0%, #1fc8db 45%, #84D2A0 120%);
+                /*background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);*/
+                cursor: pointer;
+                box-shadow: 1px 1px 2px black;
+                transform: scale(.6);
+                white-space: nowrap;
+            }
+
+            div.brand {
+                font-weight: 300;
+                font-size: 50px;
+                margin: 0;
+                color: white;
+                letter-spacing: 0;
+                text-shadow: 2px 2px 0 black, -1px -1px 0 black;
+            }
+
+            p.tagline {
+                font-weight: 400;
+                margin-top: 50px;
+                font-size: 14px;
+                
+            }
+
+            .tagline span {
+                vertical-align: middle;
+            }
+
+            .tagline span:nth-child(1) {
+                font-size: 18px
+            }
+            .tagline span:nth-child(2) {
+                font-size: 30px
+            }
+            .tagline span:nth-child(3) {
+                font-size: 50px;
+                font-weight: 300;
+            }
+            .tagline span:nth-child(4) {
+                font-size: 35px
+            }
+            .tagline span:nth-child(5) {
+                font-size: 30px
+            }
+            .tagline span:nth-child(6) {
+                font-size: 25px
+            }
+            .tagline span:nth-child(7) {
+                font-size: 20px
+            }
+            .tagline span:nth-child(8) {
+                font-size: 50px
+            }
+            .tagline span:nth-child(9) {
+                font-size: 20px
+            }
+            .tagline span:nth-child(10) {
+                font-size: 30px
+            }
+            .tagline span:nth-child(11) {
+                font-size: 50px;
+                font-weight: 300;
+            }
+            .tagline span:nth-child(12) {
+                font-size: 30px
+            }
+            .tagline span:nth-child(13) {
+                font-size: 20px
+            }
+            
+            .tagline i {
+                display: block;
+                font-style: normal;
+            }
+            i.wave {
+                display: inline-block;
+                font-style: normal;
+                letter-spacing: -1px;
+                position: relative; top: -2px;
+                text-transform: uppercase;
+                font-weight: 400;
+                margin: 0;
+            }
+            .decor {
+                width: 320px; position: absolute;
+                transform: translate(50vw, 0);
+            }
+            .decor .inner {
+                transform: translate(-50%, 0);
+            }
+            .decor.on {
+                transform: translate(200px, 0);
+            }
+            .speakers {
+                width: 320px; position: absolute;
+                transform: translate(calc(50vw + 160px), 0);
+                opacity: 0;
+                visibility: hidden;
+                padding-top: 10px;
+            }
+            .decor.on + .speakers {
+                transform: translate(50vw, 0);
+                opacity: 1;
+                visibility: visible;
+            }
+            .speakers .inner {
+                transform: translate(-50%, 0);
+            }
+            .meeting {
+                width: 320px; position: absolute;
+                transform: translate(calc(100vw - 160px), 0);
+                opacity: 0;
+                visibility: hidden;
+                padding: 0 0 20px 0;
+                box-shadow: 0 0 50px rgba(69, 184, 216, 0.3);
+                border-radius: 30px;
+                background: white;
+            }
+            .speakers .inner {
+                transform: translate(-50%, 0);
+            }
+            .decor.on + .speakers + .meeting.on {
+                transform: translate(calc(100vw - 350px), 0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .speakers input[type=text] {
+                height: 50px;
+                border-radius: 3px;
+                border: 1px solid rgba(69, 184, 216, .6);
+                padding: 5px 10px;
+                font-size: 16px;
+                vertical-align: middle;
+                margin-right: 5px;
+                width: 200px;
+                color: #45B6D8;
+                font-weight: 400;
+                letter-spacing: 0;
+            }
+            .speakers input[type=text]:disabled {
+                background: #F8F8F8;
+                border-color: #F8F8F8;
+            }
+            .speakers button,
+            .speakers .button,
+            .meeting button {
+                height: 50px;
+                line-height: 48px;
+                text-decoration: none;
+                color: #45B6D8;
+                padding: 0 20px;
+                vertical-align: middle;
+                border-radius: 50px;
+                border: 1px solid #45B6D8;
+                background: transparent;
+                cursor: pointer;
+                display: inline-block;
+                font-weight: 600;
+            }
+            .speakers button.recording {
+                border-color: red;
+            }
+            .speakers .waves {
+                margin-top: 20px;
+                opacity: 0;
+                display: none;
+            }
+            .speakers button.recording ~ .waves,
+            #save[download] ~ .waves {
+                opacity: 1;
+                display: block;
+            }
+            .speakers canvas { 
+                width: 100%;
+                height: 50px;
+            }
+            #save,
+            #rerecord { 
+                margin-top: 30px;
+                display: none
+            }
+            .speakers button.recording + #save,
+            .speakers button.recording + #rerecord,
+            .speakers button:not(.recording) + #save[download] ~ .waves #msg,
+            .speakers button:not(.recording) + #save[download] ~ .waves #stop,
+            .speakers button:not(.recording) + #save[download] ~ .waves #analyser,
+            .speakers button.recording ~ .waves #wavedisplay {
+                display: none
+            }
+            .speakers button:not(.recording) + #save[download],
+            .speakers button:not(.recording) + #save[download] + #rerecord {
+                display: inline-block
+            }
+            .redbord {
+                border-color: #F06060 !important;
+            }
+            .redcol {
+                color: #F06060 !important;
+            }
+            .onespeaker,
+            .savedspeaker {
+                position: relative; z-index: 1;
+                margin: 15px -20px;
+                padding: 10px 20px;
+                border-radius: 30px;
+                box-shadow: 0 0 50px rgba(69, 184, 216, 0.3);
+                background: white;
+            }
+            .onespeaker {
+                padding-bottom: 20px;
+            }
+            .savedspeaker .savedwave {
+                width: 100%;
+                height: 50px;
+            }
+            .speakers .label {
+                margin-bottom: 10px;
+                text-align: left;
+                color: #45B6D8;
+            }
+            #socketdata {
+                overflow-y: auto;
+                height: calc(50vh);
+            }
+            .currentspeaker {
+                padding: 6px 15px;
+            }
+            .currentspeaker.current {
+                background: #EBF8FB;
+                border-radius: 3px;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        
+        <div class="decor alltra">
+            <div class="inner">
+                <div class="brand">Speaker ID</div>
+                <img src="speakerid.png">
+                <p class="tagline">
+                    <i>Auto-recognize your meeting participants</i>
+                    <button type="button" onclick="toggleDrawer()"><i class="wave"><span>b</span><span>y</span> <span>t</span><span>h</span><span>e</span><span>i</span><span>r</span><span>&nbsp;</span><span>v</span><span>o</span><span>i</span><span>c</span><span>e</span></i></button>
+                </p>
+            </div>
+        </div>
+        <div class="speakers alltra" id="speakers">
+            <div class="inner">
+
+                <div class="savedspeakers"></div>
+
+                <div class="onespeaker"> 
+                    <div class="label">Add speaker</div>
+                    <input type="text" placeholder="speaker nickname" id="speakernick" class="alltra"><button onclick="toggleRec(this);" id="recorder" class="alltra"><img src="speakerid.png" width=70 height=48></button>
+                    <a id="save" href="#" class="button">Save voice</a>
+                    <a id="rerecord" href="#" class="button" onclick="jQuery('#recorder').click()">Re-record</a>
+                    <div class="waves">
+                        <canvas id="analyser"></canvas>
+                        <canvas id="wavedisplay"></canvas>
+                        <p id="msg">Recording <span id="spname"></span>...</p>
+                        <a id="stop" href="#" class="button" onclick="jQuery('#recorder').click()">Stop recording</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="meeting alltra">
+            <div class="inner lefted">
+                <button onclick="startMeeting()" id="startmeeting" style="margin: 15px">Start meeting</button>
+                <div id="socketdata">
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            var speakernick, savedData, postThisBlob, meetinginprog = false;
+
+            function toggleDrawer() {
+                jQuery('.decor').toggleClass('on').hasClass('on') ? setTimeout(function() {jQuery('#speakernick').focus()}, 50) : null;
+            };
+
+            function toggleRec(that) {
+                speakernick = jQuery('#speakernick').val();
+                if (!speakernick) {
+                    alert('Please add their name first.');
+                    return;
+                }
+                jQuery('#spname').html(speakernick);
+                jQuery('#speakernick').attr('disabled', true);
+                toggleRecording(that);
+            };
+
+            function postBlob () {
+                var fd = new FormData();
+                fd.append('speakername', speakernick);
+                fd.append('data', postThisBlob);
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '/uploadaudio',
+                    data: fd,
+                    processData: false,
+                    contentType: false
+                }).done(function(data) {
+                    //console.log(data);
+                });
+            };
+
+            jQuery('#save').mousedown(function() {
+
+                jQuery('#save').attr('href', '#').removeAttr("download");
+
+                postBlob();
+
+                var canvas = document.getElementById("wavedisplay"),
+                    ctx = canvas.getContext("2d"),
+                    savedData = new Image();
+                    savedData.src = canvas.toDataURL("image/png"),
+                    savedspeaker = jQuery('<div>').attr('class', 'savedspeaker');
+                    
+                    //ctx.drawImage(savedData,0,0);
+
+                jQuery('#speakers .inner .savedspeakers').append(savedspeaker);
+                savedspeaker.append(
+                    jQuery('<div class="speakerinner">')
+                            .append(
+                                jQuery('<div class="label">').html(speakernick)
+                            )
+                            .append(
+                                jQuery('<img>').attr({'src': savedData.src, 'class': 'savedwave'})
+                            )
+                );
+                jQuery('#save').attr('href', '#').removeAttr("download");
+                jQuery('#speakernick').val('').attr('disabled', false).focus();
+                jQuery('.meeting').addClass('on');
+            });
+
+            function drawBuffer( width, height, context, data ) {
+                var step = Math.ceil( data.length / width );
+                var amp = height / 2;
+                context.fillStyle = "#45B6D8";
+                context.clearRect(0,0,width,height);
+                for(var i=0; i < width; i++){
+                    var min = 1.0;
+                    var max = -1.0;
+                    for (j=0; j<step; j++) {
+                        var datum = data[(i*step)+j]; 
+                        if (datum < min)
+                            min = datum;
+                        if (datum > max)
+                            max = datum;
+                    }
+                    context.fillRect(i,(1+min)*amp,1,Math.max(1,(max-min)*amp));
+                }
+            };
+
+
+
+
+
+
+
+            var sampleRate = 48000, ws = "", strack, recorder, lastspeaker = "", lasttime = null;
+
+            function initializeRecorder(stream){
+                audio_context = new AudioContext;
+                sampleRate = audio_context.sampleRate;
+                audioInput = audio_context.createMediaStreamSource(stream);
+                strack = stream.getTracks()[0];
+
+                //console.log("Created media stream.");
+
+                var bufferSize = 16384;
+                // record only 1 channel
+                recorder = audio_context.createScriptProcessor(bufferSize, 1, 1);
+                // specify the processing function
+                recorder.onaudioprocess = recorderProcess;
+                // connect stream to our recorder
+                audioInput.connect(recorder);
+                // connect our recorder to the previous destination
+                recorder.connect(audio_context.destination);
+            };
+
+            function recorderProcess(e) {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    var left = e.inputBuffer.getChannelData(0);
+                    ws.send(convertFloat32ToInt16(left));
+                }
+            };
+
+            function convertFloat32ToInt16(buffer) {
+                l = buffer.length;
+                buf = new Int16Array(l);
+                while (l--) {
+                buf[l] = Math.min(1, buffer[l])*0x7FFF;
+                }
+                return buf.buffer;
+            };
+
+            function errorCallback(error){
+                console.log(error);
+            };
+
+            function startMeeting() {
+                meetinginprog = !meetinginprog;
+                jQuery('#startmeeting').html(meetinginprog ? 'Stop meeting' : 'Start meeting');
+
+                if (meetinginprog) {
+                    navigator.getUserMedia({audio: true, video: false}, initializeRecorder, function(e) {
+                        //console.log('No live audio input: ' + e);
+                    });
+
+                    ws = new WebSocket('wss://192.168.224.238:9000/demosocket');
+
+                    ws.onopen = function(evt) {
+                        //console.log('Connected to websocket.');
+                        ws.onmessage = function (event) {
+                            var nd = new Date();
+                            var nda = (nd+"").split(" ");
+                            var nds = nda[0] + ' ' + nda[1] + ' ' + nda[2] + ' ' + nda[3] + ' ' + nda[4];
+
+                            if (lasttime) {
+                                jQuery("#socketdata .currentspeaker")
+                                    .first()
+                                        .find('.dur')
+                                            .html(((nd.getTime() - lasttime.getTime()) / 1000).toFixed(2));
+                            };
+
+                            if (event.data != lastspeaker) {
+                                //jQuery("#socketdata .currentspeaker").removeClass('current');
+                                //jQuery("#socketdata").prepend('<div class="currentspeaker current clearfix"><img src="'+event.data+'.png" width=50 height=50 style="float: left; margin-right: 10px">' + event.data + '<br><span class="gray">' + nds + ', for <span class="dur">0.01</span>s</span>');
+                                jQuery("#socketdata").html('<div class="currentspeaker clearfix"><img src="'+event.data+'.png" width=200 height=200><br><br>' + event.data + '<br><span class="gray">' + nds + ', for <span class="dur">0.01</span>s</span>');
+                                lastspeaker = event.data;
+                                lasttime = nd;
+                            }
+                        }
+                    }
+                }
+                else {
+                    strack.stop();
+                    recorder = null;
+                    closeSocket();
+                    jQuery("#socketdata .currentspeaker").removeClass('current');
+                }
+            };
+
+            function closeSocket() {
+                ws.onclose = function () {}; // disable onclose handler first
+                ws.close()
+            };
+
+            window.onbeforeunload = function() {
+                closeSocket()
+            };
+
+
+
+
+
+        </script>
+        
+    </body>
+</html>    
