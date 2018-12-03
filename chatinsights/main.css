@@ -200,16 +200,16 @@ table.sent {
     margin-bottom: 60px;
 }
 table.sent td:nth-child(1) {
-    width: 35%;
+    width: 37%;
     text-align: right;
 }
 table.sent td:nth-child(2) {
-    width: 30%;
+    width: 26%;
     min-width: 150px;
     text-align: center;
 }
 table.sent td:nth-child(3) {
-    width: 35%;
+    width: 37%;
     text-align: left;
 }
 table.sent div {
