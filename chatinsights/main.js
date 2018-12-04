@@ -122,7 +122,7 @@ function displayData() {
     $('#first').empty();
     words.sort(sortBySum);
 
-    words.shift();  // throwing away the biggest value word
+    //words.shift();  // throwing away the biggest value word
 
     $.each(words, function(key, value) {
         if (value.neg > biggestSum)
