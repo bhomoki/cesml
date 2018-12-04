@@ -5,15 +5,12 @@
     <meta charset="utf-8">
     <title>Chat Insights</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700&amp;subset=latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kristi" rel="stylesheet">
-    <script
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-        crossorigin="anonymous"></script>
-    <script src="main.js?v=1"></script>
-    <link rel="stylesheet" href="main.css?v=1">
+    <script src="moment.min.js"></script>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="main.js?v="></script>
+    <link rel="stylesheet" href="main.css?v=">
 
     <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
@@ -44,17 +41,61 @@
         <h1>Chat Insights</h1>
         <p style="margin-bottom: 40px">Select product, location and time-frame below.</p>
 
-        <select id="product"><option>Product One</option><option selected>Dyson</option><option>Product 3</option></select>
-        <select id="location"><option selected>Budapest</option><option>Berlin</option><option>San Francisco</option></select>
-        <select id="week"><option selected value="18">Week 18, 2018</option><option value="19">Week 19, 2018</option><option value="20">Week 20, 2018</option></select>
-        <!--<input id="week" type="week" name="week" min="2018-W18" max="2018-W26" value="2018-W18" required>-->
+        <div class="controls">
+            <select id="product" onchange="updateFilters()"></select>
+            <select id="location" onchange="updateFilters()"></select>
+            <select id="week" onchange="updateFilters()">
+                <option value="13">Week 13, 2018</option>
+                <option value="14">Week 14, 2018</option>
+                <option value="15">Week 15, 2018</option>
+                <option value="16">Week 16, 2018</option>
+                <option value="17">Week 17, 2018</option>
+                <option value="18">Week 18, 2018</option>
+                <option value="19">Week 19, 2018</option>
+                <option value="20">Week 20, 2018</option>
+                <option value="21">Week 21, 2018</option>
+                <option value="22">Week 22, 2018</option>
+                <option value="23">Week 23, 2018</option>
+                <option value="24">Week 24, 2018</option>
+                <option value="25">Week 25, 2018</option>
+            </select>
+            <!--<input id="week" type="week" name="week" min="2018-W18" max="2018-W26" value="2018-W18" required>-->
+        </div>
         
-        <table class="sent">
-            <tr><td><div style="width: 100%">14</div></td><td class="label1">network [23]</td><td><div style="width: 80%">9</div></td></tr>
-            <tr><td><div style="width: 70%">6</div></td><td class="label1">something [15]</td><td><div style="width: 100%">9</div></td></tr>
-            <tr><td><div style="width: 60%">4</div></td><td class="label1">sound [11]</td><td><div style="width: 90%">7</div></td></tr>
+        <table class="sent" id="first">
+            <!--
+            <tr data-word="network"><td><div style="width: 100%">14</div></td><td class="label1">network [23]</td><td><div style="width: 80%">9</div></td></tr>
+            <tr data-word="something"><td><div style="width: 70%">6</div></td><td class="label1">something [15]</td><td><div style="width: 100%">9</div></td></tr>
+            <tr data-word="sound"><td><div style="width: 60%">4</div></td><td class="label1">sound [11]</td><td><div style="width: 90%">7</div></td></tr>
+            -->
         </table>
 
+        <hr>
+
+        <table class="sent">
+            <tr data-word="something" class="nohov"><td><div style="width: 70%">6</div></td><td class="label1">something [15]</td><td><div style="width: 100%">9</div></td></tr>
+        </table>
+        <table class="sent sub">
+            <tr data-word="awful"><td><div style="width: 60%">5</div></td><td class="label1">awful [5]</td><td><div style="width: 0%"></div></td></tr>
+        </table>
+
+        <hr>
+
+        <div class="bubbles">
+            <div class="bubble">
+                <div class="props">
+                    <div class="label">Dyson</div><div class="label">Budapest</div><div class="label">May 15, 2018, 3:21 PM</div>
+                </div>
+                <div class="words">
+                    <div class="label">something</div><div class="label">awful</div>
+                </div>
+                <div class="text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean scelerisque mattis nisi, ac sollicitudin elit gravida nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                </div>
+            </div>
+        </div>
+
+        <!--
         <h1>Lorem ipsum</h1>
         <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean scelerisque mattis nisi, ac sollicitudin elit gravida nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam sed tellus non erat blandit ultrices id et libero. Donec ac ligula feugiat, fringilla nulla quis, aliquet sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus feugiat lacus id ultricies ornare. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus nec nulla nec velit placerat porttitor at eu ante. Proin id diam vitae erat lacinia imperdiet. Proin suscipit sagittis posuere. Quisque non bibendum quam, porttitor accumsan lorem. Sed eu risus lacinia, euismod nisl vitae, scelerisque ligula.
@@ -65,6 +106,7 @@
         <p>
         Vivamus molestie sodales elit sit amet pulvinar. In ullamcorper ultricies pulvinar. Nulla egestas ultrices ipsum, ut luctus justo mollis vel. Duis nulla libero, pellentesque et pretium vel, consectetur nec risus. Vivamus congue nisl non feugiat sollicitudin. Praesent in sapien ut velit tincidunt efficitur ut et nisl. Integer porttitor ut est sed tempus. Fusce eu quam semper, tincidunt odio ac, consequat nisi. Praesent fermentum eros quis sem aliquam, sit amet convallis orci tempus. Morbi ipsum mauris, rhoncus interdum velit ut, pharetra rutrum nulla. Donec metus ex, molestie et egestas ac, viverra id quam. Mauris finibus at tortor ac lobortis. Cras dapibus porta elit bibendum malesuada.
         </p>
+        -->
 
     </div>
 
