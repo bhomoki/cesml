@@ -117,6 +117,9 @@ svg {
 .hidden {
     display: none
 }
+.inliner {
+    display: inline-block
+}
 
 
 
@@ -161,6 +164,18 @@ footer {
     /*max-width: 1500px;
     margin: 0 auto;*/
     line-height: 150%;
+}
+.content > .left,
+.content > .right {
+    width: 49%;
+    display: inline-block;
+    vertical-align: top;
+}
+.content > .left {
+    padding-right: 2%;
+}
+.content > .right {
+    padding-left: 2%;
 }
 
 .copyr {

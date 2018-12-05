@@ -8,10 +8,11 @@ var locationC = null;
 var week = null;
 var startDate = null;
 var endDate = null;
+var sentiments = 0;
 var biggestSum = 0;
 var words = [];
 var products = {};
-var locations = {};
+var locations = [];
 var adj = {};
 
 //var phase = parseInt(queryObj().ph) || 1;
@@ -19,26 +20,32 @@ var adj = {};
 function initialize() {
     $.getJSON( "messages.json", function( data ) {
         allData = data;
-        /*
-        var items = [];
-        $.each( data, function( key, val ) {
-            items.push( "<li id='" + key + "'>" + val + "</li>" );
-        });
-        
-        $( "<ul/>", {
-            "class": "my-new-list",
-            html: items.join( "" )
-        }).appendTo( "body" );
-        */
-
         getFilterValues();
         updateFilters();
     });
 };
 
+function clearDisp() {
+    $('table#first').empty();
+    $('div#loading').removeClass('hidden');
+    $('div#nodata').addClass('hidden');
+};
+
 function sortBySum(a, b){
   var aName = a.sum;
   var bName = b.sum; 
+  return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+};
+
+function sortByPos(a, b){
+  var aName = a.pos;
+  var bName = b.pos; 
+  return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+};
+
+function sortByNeg(a, b){
+  var aName = a.neg;
+  var bName = b.neg; 
   return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
 };
 
@@ -53,6 +60,11 @@ function lookupItem(which) {
     });
 };
 
+function sentFilter(which) {
+    sentiments = which;
+    filterData();
+};
+
 function updateFilters() {
     product = $('#product').val();
     locationC = $('#location').val();
@@ -65,53 +77,56 @@ function getFilterValues() {
         var tempProduct = value.product;
         var tempLocation = value.countrycode;
         if (!products[tempProduct]) products[tempProduct] = 1;
-        if (!locations[tempLocation]) locations[tempLocation] = 1;
+        if (locations.indexOf(tempLocation) == -1) locations.push(tempLocation);
     });
+    locations.sort();
     $.each(products, function(key, value) {
         $('#product').append($('<option>', {value: key, text: key}));
     });
     $.each(locations, function(key, value) {
-        $('#location').append($('<option>', {value: key, text: key}));
+        $('#location').append($('<option>', {value: value, text: value}));
     });
 
     $("#product").val($("#product option:first").val());
-    $("#location").val($("#location option:first").val());
+    $("#location").val($("#location option:last").val());
     $("#week").val($("#week option:first").val());
 };
 
-
 function filterData() {
-    words = [];
-    startDate = moment(moment().day("Monday").week(week).format('YYYY-MM-DD')).toDate();
-    endDate = moment(startDate).add(7, 'days').toDate();
-    $.each(allData, function(key, value) {
-        //console.log(value.timestamp, startDate, endDate);
-        if (
-            moment(value.timestamp).isBetween(startDate, endDate) &&
-            value.countrycode == locationC && 
-            value.product == product
-        ) {
-            //console.log(JSON.stringify(value));
-            if (value.nouns) {
-                $.each(value.nouns, function(key, value1) {
-                    if (value1.word) {
-                        if (!words.find(obj => obj.word == value1.word)) {
-                            words.push({word: value1.word, sum: 0, neg: 0, pos: 0});
-                        };
-                        $.each(value1.adjectives, function(key, value2) {
-                            var obj = words.find(obj => obj.word == value1.word);
-                            obj.sum += parseInt(value2.count);
-                            if (parseFloat(value2.polarity) > 0)
-                                obj.pos += parseInt(value2.count);
-                            else
-                                obj.neg += parseInt(value2.count);
-                        });
-                    }
-                });
+    clearDisp();
+    setTimeout(function () {
+        words = [];
+        startDate = moment(moment().day("Monday").week(week).format('YYYY-MM-DD')).toDate();
+        endDate = moment(startDate).add(7, 'days').toDate();
+        $.each(allData, function(key, value) {
+            //console.log(value.timestamp, startDate, endDate);
+            if (
+                moment(value.timestamp).isBetween(startDate, endDate) &&
+                value.countrycode == locationC && 
+                value.product == product
+            ) {
+                //console.log(JSON.stringify(value));
+                if (value.nouns) {
+                    $.each(value.nouns, function(key, value1) {
+                        if (value1.word) {
+                            if (!words.find(obj => obj.word == value1.word)) {
+                                words.push({word: value1.word, sum: 0, neg: 0, pos: 0});
+                            };
+                            $.each(value1.adjectives, function(key, value2) {
+                                var obj = words.find(obj => obj.word == value1.word);
+                                obj.sum += parseInt(value2.count);
+                                if (parseFloat(value2.polarity) > 0)
+                                    obj.pos += sentiments != 2 ? parseInt(value2.count) : 0;
+                                else
+                                    obj.neg += sentiments != 1 ? parseInt(value2.count) : 0;
+                            });
+                        }
+                    });
+                }
             }
-        }
-    });
-    displayData();
+        });
+        displayData();
+    }, 1);
 };
 
 function getperc(a, b) {
@@ -119,8 +134,11 @@ function getperc(a, b) {
 };
 
 function displayData() {
-    $('#first').empty();
-    words.sort(sortBySum);
+    var sorter = sortBySum;
+    if (sentiments == 1) sorter = sortByPos;
+    if (sentiments == 2) sorter = sortByNeg;
+    words.sort(sorter);
+    biggestSum = 0;
 
     //words.shift();  // throwing away the biggest value word
 
@@ -131,10 +149,9 @@ function displayData() {
             biggestSum = value.pos;
 
     });
-    //biggestSum = words[0].sum;
 
     $.each(words, function(key, value) {
-        if (value.sum > 1) {   // throwing away all words that have a sum of 1
+        if (value.sum > 0) {   // throwing away all words that have a sum of 1
             var $tr = $('<tr data-word="'+value.word+'">')
                 .on("click", function(){displayWord($(this).data("word"))})
                 .append(
@@ -143,6 +160,21 @@ function displayData() {
                 .appendTo('#first');
         }
     });
+
+    $('table.sent td div').removeClass('hidden')
+    if (sentiments == 1) {
+        $('table.sent td:nth-child(2) div:nth-child(2)').addClass('hidden')
+    }
+    if (sentiments == 2) {
+        $('table.sent td:nth-child(2) div:nth-child(1)').addClass('hidden')
+    };
+
+    if (!words.length) 
+        $('div#nodata').removeClass('hidden')
+    else 
+        console.log(words.length);
+
+    $('div#loading').addClass('hidden');
 };
 
 function displayWord(thatWord) {
@@ -150,7 +182,6 @@ function displayWord(thatWord) {
 };
 
 function loadItem(which) {
-    $('#datatable').empty();
     var singleItem = sampleData[which];
     
     if (singleItem) {
