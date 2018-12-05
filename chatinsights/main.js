@@ -63,7 +63,7 @@ function updateFilters() {
 function getFilterValues() {
     $.each(allData, function(key, value) {
         var tempProduct = value.product;
-        var tempLocation = value.location;
+        var tempLocation = value.countrycode;
         if (!products[tempProduct]) products[tempProduct] = 1;
         if (!locations[tempLocation]) locations[tempLocation] = 1;
     });
@@ -88,7 +88,7 @@ function filterData() {
         //console.log(value.timestamp, startDate, endDate);
         if (
             moment(value.timestamp).isBetween(startDate, endDate) &&
-            value.location == locationC && 
+            value.countrycode == locationC && 
             value.product == product
         ) {
             //console.log(JSON.stringify(value));

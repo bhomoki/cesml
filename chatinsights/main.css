@@ -190,9 +190,11 @@ input[type=week] {
     padding: 8px 10px 6px 10px;
     font-weight: 700;
     margin: 0 5px 5px 0;
+    background-color: white;
 }
 .controls {
     margin-bottom: 40px;
+    font-weight: 700;
 }
 table {
     border-collapse: collapse;
@@ -214,9 +216,9 @@ table.sent td:nth-child(3) {
     text-align: right;
 }
 table.sent td:nth-child(1) {
-    width: 26%;
+    width: 20%;
     min-width: 150px;
-    max-width: 250px; 
+    max-width: 200px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -229,16 +231,19 @@ table.sent td:nth-child(2) {
     width: 74%;
     text-align: left;
 }
-table.sent div {
+table.sent div,
+.redbar, .greenbar {
     position: relative;
     height: 6px; line-height: 6px;
     margin: 4px 0;
     border-radius: 100px;
 }
-table.sent td div:nth-child(2) {
+table.sent td div:nth-child(2),
+.redbar {
     background-color: #FF6F69;
 }
-table.sent td div:nth-child(1) {
+table.sent td div:nth-child(1),
+.greenbar {
     background-color: #5ABCB4;
 }
 table.sent td div span {
