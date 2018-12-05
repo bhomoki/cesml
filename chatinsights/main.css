@@ -17,39 +17,39 @@
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: 300;
-  src: url('../fonts/comfortaa-v12-latin_latin-ext-300.eot'); /* IE9 Compat Modes */
+  src: url('fonts/comfortaa-v12-latin_latin-ext-300.eot'); /* IE9 Compat Modes */
   src: local('Comfortaa Light'), local('Comfortaa-Light'),
-       url('../fonts/comfortaa-v12-latin_latin-ext-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/comfortaa-v12-latin_latin-ext-300.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/comfortaa-v12-latin_latin-ext-300.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/comfortaa-v12-latin_latin-ext-300.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/comfortaa-v12-latin_latin-ext-300.svg#Comfortaa') format('svg'); /* Legacy iOS */
+       url('fonts/comfortaa-v12-latin_latin-ext-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/comfortaa-v12-latin_latin-ext-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/comfortaa-v12-latin_latin-ext-300.woff') format('woff'), /* Modern Browsers */
+       url('fonts/comfortaa-v12-latin_latin-ext-300.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/comfortaa-v12-latin_latin-ext-300.svg#Comfortaa') format('svg'); /* Legacy iOS */
 }
 /* comfortaa-regular - latin_latin-ext */
 @font-face {
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/comfortaa-v12-latin_latin-ext-regular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/comfortaa-v12-latin_latin-ext-regular.eot'); /* IE9 Compat Modes */
   src: local('Comfortaa Regular'), local('Comfortaa-Regular'),
-       url('../fonts/comfortaa-v12-latin_latin-ext-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/comfortaa-v12-latin_latin-ext-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/comfortaa-v12-latin_latin-ext-regular.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/comfortaa-v12-latin_latin-ext-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/comfortaa-v12-latin_latin-ext-regular.svg#Comfortaa') format('svg'); /* Legacy iOS */
+       url('fonts/comfortaa-v12-latin_latin-ext-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/comfortaa-v12-latin_latin-ext-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/comfortaa-v12-latin_latin-ext-regular.woff') format('woff'), /* Modern Browsers */
+       url('fonts/comfortaa-v12-latin_latin-ext-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/comfortaa-v12-latin_latin-ext-regular.svg#Comfortaa') format('svg'); /* Legacy iOS */
 }
 /* comfortaa-700 - latin_latin-ext */
 @font-face {
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: 700;
-  src: url('../fonts/comfortaa-v12-latin_latin-ext-700.eot'); /* IE9 Compat Modes */
+  src: url('fonts/comfortaa-v12-latin_latin-ext-700.eot'); /* IE9 Compat Modes */
   src: local('Comfortaa Bold'), local('Comfortaa-Bold'),
-       url('../fonts/comfortaa-v12-latin_latin-ext-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/comfortaa-v12-latin_latin-ext-700.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/comfortaa-v12-latin_latin-ext-700.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/comfortaa-v12-latin_latin-ext-700.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/comfortaa-v12-latin_latin-ext-700.svg#Comfortaa') format('svg'); /* Legacy iOS */
+       url('fonts/comfortaa-v12-latin_latin-ext-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/comfortaa-v12-latin_latin-ext-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('fonts/comfortaa-v12-latin_latin-ext-700.woff') format('woff'), /* Modern Browsers */
+       url('fonts/comfortaa-v12-latin_latin-ext-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('fonts/comfortaa-v12-latin_latin-ext-700.svg#Comfortaa') format('svg'); /* Legacy iOS */
 }
 
 
