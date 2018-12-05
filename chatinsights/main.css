@@ -206,7 +206,6 @@ input[type=week] {
     height: 40px;
     line-height: 40px;
     padding: 8px 10px 6px 10px;
-    font-weight: 700;
     margin: 0 5px 5px 0;
     background-color: white;
 }
@@ -299,6 +298,7 @@ hr {
     max-width: 500px;
     padding: 20px;
     border-radius: 20px;
+    border-bottom-right-radius: 0;
     font-size: 14px;
     line-height: 150%;
     box-shadow: 0 0 4px rgba(0, 0, 0, .2);
@@ -307,6 +307,7 @@ hr {
 }
 .bubble .label {
     display: inline-block; 
+    white-space: nowrap;
     padding: 3px 10px 1px 10px;
     margin: 0 3px 3px 0;
     border-radius: 100px;
@@ -321,6 +322,8 @@ hr {
 }
 .bubble .text {
     padding-top: 10px;
+    /*font-family: Kristi;
+    font-size: 26px;*/
 }
 
 @media only screen and (max-width: 600px) {
