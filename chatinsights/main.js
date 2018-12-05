@@ -185,8 +185,35 @@ function displayData(source, table) {
 };
 
 function displayBubble(w1, w2) {
-    console.log('displayBubble', w1, w2);
-}
+    $('div#fourth').removeClass('hidden');
+    $('div#bubbles').empty();
+    $.each(allData, function(key, value) {
+            if (
+                moment(value.timestamp).isBetween(startDate, endDate) &&
+                value.countrycode == locationC && 
+                value.product == product
+            ) {
+                if (value.nouns) {
+                    $.each(value.nouns, function(key, value1) {
+                        if (value1.word == w1) {
+                            $.each(value1.adjectives, function(key, value2) {
+                                if (value2.word == w2) {
+                                    showBubble(value, w1, w2);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        
+    });
+};
+
+function showBubble(value, w1, w2) {
+    $('#bubbles').append($(
+        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+locationC+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="words"><div class="label">'+w1+'</div><div class="label">'+w2+'</div></div><div class="text">'+value.text+'</div></div>')
+    );
+};
 
 function displayWord(targetTable, thatWord) {
     if (!thatWord.length) return;
