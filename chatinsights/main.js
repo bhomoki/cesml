@@ -115,7 +115,7 @@ function filterData() {
 };
 
 function getperc(a, b) {
-    return parseInt(b / a * 100);
+    return parseFloat(b / a * 100);
 };
 
 function displayData() {
@@ -138,9 +138,8 @@ function displayData() {
             var $tr = $('<tr data-word="'+value.word+'">')
                 .on("click", function(){displayWord($(this).data("word"))})
                 .append(
-                    $('<td><div style="width: '+getperc(biggestSum, value.neg)+'%">'+value.neg+'</div></td>'),
                     $('<td class="label1">'+value.word+' ['+value.sum+']</td>'),
-                    $('<td><div style="width: '+getperc(biggestSum, value.pos)+'%">'+value.pos+'</div></td>'))
+                    $('<td><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></td>'))
                 .appendTo('#first');
         }
     });
