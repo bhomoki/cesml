@@ -59,9 +59,11 @@
                 <option value="24">Week 24, 2018</option>
                 <option value="25">Week 25, 2018</option>
             </select>&nbsp;&nbsp;&nbsp;
-            <label><input type="radio" name="sent" onclick="sentFilter(1)"><div class="greenbar inliner" style="width: 40px"></div></label>&nbsp;&nbsp;&nbsp;
-            <label><input type="radio" name="sent" onclick="sentFilter(2)"><div class="redbar inliner" style="width: 40px"></div></label>&nbsp;&nbsp;&nbsp;
-            <label><input type="radio" name="sent" onclick="sentFilter(0)" checked><div class="inliner" style="line-height: 50%"><div class="greenbar inliner" style="width: 40px; margin: 0 2px;"></div><br><div class="redbar inliner" style="width: 40px; margin: 0 2px;"></div></div></label>
+            <div class="inliner nowrap">
+                <label><input type="radio" name="sent" onclick="sentFilter(1)"><div class="greenbar inliner" style="width: 40px"></div></label>&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" name="sent" onclick="sentFilter(2)"><div class="redbar inliner" style="width: 40px"></div></label>&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" name="sent" onclick="sentFilter(0)" checked><div class="inliner" style="line-height: 50%"><div class="greenbar inliner" style="width: 40px; margin: 0 2px;"></div><br><div class="redbar inliner" style="width: 40px; margin: 0 2px;"></div></div></label>
+            </div>
             <!--<input id="week" type="week" name="week" min="2018-W18" max="2018-W26" value="2018-W18" required>-->
         </div>
 
@@ -82,25 +84,27 @@
         </div>
 
         <div class="right">
-            <table class="sent">
+            <table class="sent" id="second">
                 <tr data-word="something" class="nohov"><td class="label1">something [15]</td><td><div style="width: 100%"><span>9</span></div><div style="width: 70%"><span>6</span></div></td></tr>
             </table>
-            <table class="sent sub">
+            <table class="sent sub" id="third">
                 <tr data-word="awful"><td class="label1">awful [5]</td><td><div style="width: 0%"><span>0</span></div><div style="width: 60%"><span>5</span></div></td></tr>
             </table>
 
-            <hr>
+            <div id="fourth">
+                <hr>
 
-            <div class="bubbles">
-                <div class="bubble">
-                    <div class="props">
-                        <div class="label">Dyson</div><div class="label">Budapest</div><div class="label">May 15, 2018, 3:21 PM</div>
-                    </div>
-                    <div class="words">
-                        <div class="label">something</div><div class="label">awful</div>
-                    </div>
-                    <div class="text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean scelerisque mattis nisi, ac sollicitudin elit gravida nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                <div class="bubbles">
+                    <div class="bubble">
+                        <div class="props">
+                            <div class="label">Dyson</div><div class="label">Budapest</div><div class="label">May 15, 2018, 3:21 PM</div>
+                        </div>
+                        <div class="words">
+                            <div class="label">something</div><div class="label">awful</div>
+                        </div>
+                        <div class="text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean scelerisque mattis nisi, ac sollicitudin elit gravida nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        </div>
                     </div>
                 </div>
             </div>

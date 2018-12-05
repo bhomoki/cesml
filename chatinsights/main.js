@@ -11,9 +11,10 @@ var endDate = null;
 var sentiments = 0;
 var biggestSum = 0;
 var words = [];
+var word1 = [];
 var products = {};
 var locations = [];
-var adj = {};
+var mainWord = "";
 
 //var phase = parseInt(queryObj().ph) || 1;
 
@@ -27,8 +28,16 @@ function initialize() {
 
 function clearDisp() {
     $('table#first').empty();
+    $('table#second').empty();
+    $('table#third').empty();
+    $('div#fourth').addClass('hidden');
     $('div#loading').removeClass('hidden');
     $('div#nodata').addClass('hidden');
+};
+function clearSubDisp() {
+    $('table#second').empty();
+    $('table#third').empty();
+    $('div#fourth').addClass('hidden');
 };
 
 function sortBySum(a, b){
@@ -99,7 +108,6 @@ function filterData() {
         startDate = moment(moment().day("Monday").week(week).format('YYYY-MM-DD')).toDate();
         endDate = moment(startDate).add(7, 'days').toDate();
         $.each(allData, function(key, value) {
-            //console.log(value.timestamp, startDate, endDate);
             if (
                 moment(value.timestamp).isBetween(startDate, endDate) &&
                 value.countrycode == locationC && 
@@ -125,7 +133,7 @@ function filterData() {
                 }
             }
         });
-        displayData();
+        displayData(words, 'first');
     }, 1);
 };
 
@@ -133,16 +141,17 @@ function getperc(a, b) {
     return parseFloat(b / a * 100);
 };
 
-function displayData() {
+function displayData(source, table) {
     var sorter = sortBySum;
     if (sentiments == 1) sorter = sortByPos;
     if (sentiments == 2) sorter = sortByNeg;
-    words.sort(sorter);
-    biggestSum = 0;
+    source.sort(sorter);
+    if (table == 'first') mainWord = "";
+    if (table != 'third') biggestSum = 0;
 
-    //words.shift();  // throwing away the biggest value word
+    //source.shift();  // throwing away the biggest value word
 
-    $.each(words, function(key, value) {
+    $.each(source, function(key, value) {
         if (value.neg > biggestSum)
             biggestSum = value.neg;
         if (value.pos > biggestSum)
@@ -150,14 +159,14 @@ function displayData() {
 
     });
 
-    $.each(words, function(key, value) {
+    $.each(source, function(key, value) {
         if (value.sum > 0) {   // throwing away all words that have a sum of 1
-            var $tr = $('<tr data-word="'+value.word+'">')
-                .on("click", function(){displayWord($(this).data("word"))})
+            var $tr = $('<tr data-table="'+table+'" data-word="'+value.word+'">')
+                .on("click", function(){displayWord($(this).data("table"), $(this).data("word"))})
                 .append(
                     $('<td class="label1">'+value.word+' ['+value.sum+']</td>'),
                     $('<td><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></td>'))
-                .appendTo('#first');
+                .appendTo('#' + table);
         }
     });
 
@@ -169,49 +178,80 @@ function displayData() {
         $('table.sent td:nth-child(2) div:nth-child(1)').addClass('hidden')
     };
 
-    if (!words.length) 
+    if (!source.length) 
         $('div#nodata').removeClass('hidden')
-    else 
-        console.log(words.length);
 
     $('div#loading').addClass('hidden');
 };
 
-function displayWord(thatWord) {
-    console.log(thatWord)
-};
+function displayBubble(w1, w2) {
+    console.log('displayBubble', w1, w2);
+}
 
-function loadItem(which) {
-    var singleItem = sampleData[which];
-    
-    if (singleItem) {
-        $.each(singleItem, function(key, value) {
-            if (phase == 2) {
-                if (key == 'labels' || key == 'intent')
-                    return true
-            };
-            $.each(labelsDefault, function(ikey, ivalue) {
-                if (key == 'intent') {
-                    if (value.toLowerCase() == getLastLabel(ivalue).toLowerCase()) {
-                        value += '<br>' + sanitizeLabels(ikey)
-                    }
-                }
-            });
-            if (key == 'labels' && value) {
-                value = beautifyLabels(value)
-            };
-            var $tr = $('<tr>').append(
-                $('<td class="la">').text(key),
-                $('<td class="' + (key == 'intent' || key == 'labels' || key == 'new_label' ? 'field labels' : 'field') + '">').html("<pre>" + value + "</pre>")
-            ).appendTo('#datatable');
-        });
-    }
-    else {
-        var $tr = $('<tr>').append(
-            $('<td class="la">').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),
-            $('<td class="field">').html("<pre><br><br>Hooray!<br>You're done with this phase. <svg role='img' width=50 height=50 style='vertical-align: middle'><use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#accept'></use></svg><br><br><a href='?ph="+(phase + 1)+"'>Start phase #"+(phase + 1)+" of 4</a></pre>")
-        ).appendTo('#datatable');
+function displayWord(targetTable, thatWord) {
+    if (!thatWord.length) return;
+    if (targetTable == 'first') {
+        mainWord = thatWord;
     };
+    if (targetTable == 'second') {
+        return;
+    };
+    if (targetTable == 'third') {
+        displayBubble(mainWord, thatWord);
+        return
+    };
+    clearSubDisp();
+    word1 = [];
+    word2 = [];
+    filteredWords = [];
+    window.scrollTo(0, 0);
+
+    startDate = moment(moment().day("Monday").week(week).format('YYYY-MM-DD')).toDate();
+    endDate = moment(startDate).add(7, 'days').toDate();
+    $.each(allData, function(key, value) {
+        if (
+            moment(value.timestamp).isBetween(startDate, endDate) &&
+            value.countrycode == locationC && 
+            value.product == product
+        ) {
+            if (value.nouns) {
+                $.each(value.nouns, function(key, value1) {
+                    if (value1.word && value1.word == thatWord) {
+                        filteredWords.push({word: value1.word, adjectives: value1.adjectives});
+                    }
+                });
+            }
+        }
+    });
+    
+    $.each(filteredWords, function(key, value1) {
+        if (!word1.find(obj => obj.word == value1.word)) {
+            word1.push({word: value1.word, sum: 0, neg: 0, pos: 0});
+        };
+        $.each(value1.adjectives, function(key, value2) {
+            var obj = word1.find(obj => obj.word == value1.word);
+            obj.sum += parseInt(value2.count);
+            if (parseFloat(value2.polarity) > 0)
+                obj.pos += sentiments != 2 ? parseInt(value2.count) : 0;
+            else
+                obj.neg += sentiments != 1 ? parseInt(value2.count) : 0;
+
+            var obj2 = word2.find(obj => obj.word == value2.word);
+            if (!obj2) {
+                obj2 = {word: value2.word, sum: 0, neg: 0, pos: 0};
+                word2.push(obj2)
+            };
+
+            obj2.sum += parseInt(value2.count);
+            if (parseFloat(value2.polarity) > 0)
+                obj2.pos += sentiments != 2 ? parseInt(value2.count) : 0;
+            else
+                obj2.neg += sentiments != 1 ? parseInt(value2.count) : 0;
+        });
+    });
+
+    displayData(word1, 'second');
+    displayData(word2, 'third');
 };
 
 function queryObj() {

@@ -120,6 +120,9 @@ svg {
 .inliner {
     display: inline-block
 }
+.nowrap {
+    white-space: nowrap;
+}
 
 
 
@@ -220,10 +223,10 @@ table td {
 table.sent {
     width: 100%;
 }
-table.sent tr:not(.nohov) {
+table.sent:not(#second) tr {
     cursor: pointer;
 }
-table.sent tr:not(.nohov):hover {
+table.sent:not(#second) tr:hover {
     background-color: rgba(0, 0, 0, .04)
 }
 table.sent td:nth-child(3) {
@@ -239,7 +242,7 @@ table.sent td:nth-child(1) {
     text-overflow: ellipsis;
     text-align: left;
 }
-table.sent tr:not(.nohov) td:nth-child(1) {
+table.sent:not(#second) tr td:nth-child(1) {
     color: #1390D3;
 }
 table.sent td:nth-child(2) {
@@ -269,11 +272,19 @@ table.sent td div span {
     text-align: right;
 }
 table.sent.sub tr {
-    font-weight: 300
+    /*font-weight: 300*/
 }
 table.sent.sub div {
     height: 4px; line-height: 4px;
     margin: 5px 0;
+}
+table#second td:nth-child(1),
+table#third td:nth-child(1) {
+    text-align: right;
+    padding-right: 30px;
+}
+table#second {
+    margin-bottom: 30px;
 }
 
 hr {
