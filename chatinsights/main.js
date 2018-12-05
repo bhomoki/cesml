@@ -211,7 +211,7 @@ function displayBubble(w1, w2) {
 
 function showBubble(value, w1, w2) {
     $('#bubbles').append($(
-        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+locationC+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="words"><div class="label">'+w1+'</div><div class="label">'+w2+'</div></div><div class="text">'+value.text+'</div></div>')
+        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="words"><div class="label">'+w1+'</div><div class="label">'+w2+'</div></div><div class="text">'+value.text+'</div></div>')
     );
 };
 
