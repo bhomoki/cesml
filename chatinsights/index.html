@@ -37,14 +37,14 @@
         <h1>Chat Insights</h1>
         <p style="margin-bottom: 40px">Select product, location and time-frame below.</p>
 
-        <div class="controls">
+        <div class="controls clearfix">
             <select id="product" onchange="updateFilters()"></select>
             <select id="location" onchange="updateFilters()"></select>
             <select id="week" onchange="updateFilters()"></select>
-            <div class="inliner nowrap">
-                <label><input type="radio" name="sent" onclick="sentFilter(1)"><div class="greenbar inliner" style="width: 40px"></div></label>&nbsp;&nbsp;&nbsp;
-                <label><input type="radio" name="sent" onclick="sentFilter(2)"><div class="redbar inliner" style="width: 40px"></div></label>&nbsp;&nbsp;&nbsp;
-                <label><input type="radio" name="sent" onclick="sentFilter(0)" checked><div class="inliner" style="line-height: 50%"><div class="greenbar inliner" style="width: 40px; margin: 0 2px;"></div><br><div class="redbar inliner" style="width: 40px; margin: 0 2px;"></div></div></label>
+            <div class="nowrap">
+                <label><input type="radio" name="sent" onclick="sentFilter(1)"><span class="greenbar"></span></label>
+                <label><input type="radio" name="sent" onclick="sentFilter(2)"><span class="redbar"></span></label>
+                <label><input type="radio" name="sent" onclick="sentFilter(0)" checked><span class="greenbar"></span><br><span class="redbar"></span></label>
             </div>
         </div>
 

@@ -282,12 +282,33 @@ input[type=week] {
 .controls select:last-of-type {
     margin-right: 30px;
 }
-.controls .inliner,
-.controls label {
-    line-height: 40px;
+.controls > * {
+    float: left;
+    line-height: normal;
+}
+.controls .greenbar,
+.controls .redbar {
+    width: 40px;
+    margin: 0;
 }
 .controls label {
+    display: inline-block; vertical-align: top;
+    white-space: normal;
+    position: relative;
+    padding-left: 22px;
+    height: 40px;
+    line-height: 7px;
+    padding-top: 10px;
+    margin-right: 20px;
+}
+.controls label input[type=radio] {
+    position: absolute; left: 0; z-index: 1;
+}
+.controls label span {
     display: inline-block;
+}
+.controls label span:only-of-type {
+    position: relative; top: 4px;
 }
 select {
     padding-right: 26px;
@@ -302,13 +323,6 @@ select {
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
-}
-select:-moz-focusring {
-    color: transparent;
-    text-shadow: 0 0 0 #000;
-}
-option:not(:checked) {
-    color: #404040; /* prevent <option>s from becoming transparent as well */
 }
 table {
     border-collapse: collapse;
