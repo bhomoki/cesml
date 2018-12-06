@@ -343,14 +343,10 @@ table.sent:not(#second) tr {
 table.sent:not(#second) tr:hover {
     background-color: rgba(0, 0, 0, .04)
 }
-table.sent td:nth-child(3) {
-    width: 37%;
-    text-align: right;
-}
 table.sent td:nth-child(1) {
     width: 20%;
     min-width: 150px;
-    max-width: 200px; 
+    max-width: 160px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -362,6 +358,7 @@ table.sent:not(#second) tr td:nth-child(1) {
 table.sent td:nth-child(2) {
     width: 74%;
     text-align: left;
+    padding-left: 25px;
 }
 table.sent div,
 .redbar, .greenbar {
@@ -392,7 +389,7 @@ table.sent.sub div {
 table#second td:nth-child(1),
 table#third td:nth-child(1) {
     text-align: right;
-    padding-right: 30px;
+    padding-right: 10px;
 }
 table#second {
     margin-bottom: 32px;
