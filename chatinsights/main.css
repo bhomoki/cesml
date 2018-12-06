@@ -242,9 +242,11 @@ footer {
 }
 .content > .left {
     padding-right: 2%;
+    float: left;
 }
 .content > .right {
     padding-left: 2%;
+    float: right;
 }
 
 .copyr {
@@ -333,6 +335,7 @@ table td {
 }
 table.sent {
     width: 100%;
+    margin-bottom: 50px;
 }
 table.sent:not(#second) tr {
     cursor: pointer;
@@ -397,12 +400,17 @@ table#second {
 table tr td .sum {
     font-size: 11.5px;
 }
-
+div#fourth {
+    margin-bottom: 50px;
+}
 hr {
     margin: 50px 0;
     height: 0;
     border: 0;
     border-top: 3px dotted #E0E0E0;
+}
+.onlymob {
+    display: none
 }
 
 .bubble {
@@ -438,7 +446,7 @@ hr {
     font-size: 26px;*/
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
     body {
         min-width: 320px;
     }
@@ -450,5 +458,26 @@ hr {
     }
     .account {
         right: 20px;
+    }
+    .content > .left,
+    .content > .right {
+        width: auto;
+    }
+    .content > .left {
+        float: right;
+    }
+    .content > .right {
+        float: left;
+    }
+    .onlymob {
+        display: block
+    }
+    .nomob {
+        display: none
+    }
+    table:empty,
+    table:empty + hr,
+    table:empty + div {
+        display: none;
     }
 }
