@@ -280,7 +280,7 @@ input[type=week] {
     font-weight: 700;
 }
 .controls select:last-of-type {
-    margin-right: 30px;
+    margin-right: 40px;
 }
 .controls > * {
     float: left;
@@ -299,10 +299,11 @@ input[type=week] {
     height: 40px;
     line-height: 7px;
     padding-top: 10px;
-    margin-right: 20px;
+    margin-right: 25px;
 }
 .controls label input[type=radio] {
-    position: absolute; left: 0; z-index: 1;
+    position: absolute; left: 0; bottom: 13px; z-index: 1;
+    width: 16px; height: 16px; margin: 0;
 }
 .controls label span {
     display: inline-block;
