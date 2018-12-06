@@ -10,9 +10,10 @@ var startDate = null;
 var endDate = null;
 var sentiments = 0;
 var biggestSum = 0;
+var weeks = [];
 var words = [];
 var word1 = [];
-var products = {};
+var products = [];
 var locations = [];
 var mainWord = "";
 
@@ -78,6 +79,10 @@ function updateFilters() {
     product = $('#product').val();
     locationC = $('#location').val();
     week = $('#week').val();
+    var yr = week.split('_')[0];
+    var wk = week.split('_')[1];
+    startDate = moment(moment().day("Monday").year(yr).week(wk).format('YYYY-MM-DD')).toDate();
+    endDate = moment(startDate).add(7, 'days').toDate();
     filterData();
 };
 
@@ -85,15 +90,25 @@ function getFilterValues() {
     $.each(allData, function(key, value) {
         var tempProduct = value.product;
         var tempLocation = value.countrycode;
-        if (!products[tempProduct]) products[tempProduct] = 1;
+        var momentStamp = moment(value.timestamp); 
+        var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
+        if (products.indexOf(tempProduct) == -1) products.push(tempProduct);
         if (locations.indexOf(tempLocation) == -1) locations.push(tempLocation);
+        if (weeks.indexOf(computedWeek) == -1) weeks.push(computedWeek);
     });
+    products.sort();
     locations.sort();
+    weeks.sort();
     $.each(products, function(key, value) {
-        $('#product').append($('<option>', {value: key, text: key}));
+        $('#product').append($('<option>', {value: value, text: value}));
     });
     $.each(locations, function(key, value) {
         $('#location').append($('<option>', {value: value, text: value}));
+    });
+    $.each(weeks, function(key, value) {
+        var yr = value.split('_')[0];
+        var wk = value.split('_')[1];
+        $('#week').append($('<option>', {value: value, text: 'Week ' + wk + ', ' + yr}));
     });
 
     $("#product").val($("#product option:first").val());
@@ -105,8 +120,6 @@ function filterData() {
     clearDisp();
     setTimeout(function () {
         words = [];
-        startDate = moment(moment().day("Monday").week(week).format('YYYY-MM-DD')).toDate();
-        endDate = moment(startDate).add(7, 'days').toDate();
         $.each(allData, function(key, value) {
             if (
                 moment(value.timestamp).isBetween(startDate, endDate) &&
@@ -166,7 +179,7 @@ function displayData(source, table) {
             var $tr = $('<tr data-table="'+table+'" data-word="'+value.word+'">')
                 .on("click", function(){displayWord($(this).data("table"), $(this).data("word"))})
                 .append(
-                    $('<td class="label1">'+value.word+(sentiments == 0 ? ' ['+value.sum+']' : '')+'</td>'),
+                    $('<td class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</td>'),
                     $('<td><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></td>'))
                 .appendTo('#' + table);
         }
@@ -235,8 +248,6 @@ function displayWord(targetTable, thatWord) {
     filteredWords = [];
     window.scrollTo(0, 0);
 
-    startDate = moment(moment().day("Monday").week(week).format('YYYY-MM-DD')).toDate();
-    endDate = moment(startDate).add(7, 'days').toDate();
     $.each(allData, function(key, value) {
         if (
             moment(value.timestamp).isBetween(startDate, endDate) &&
