@@ -17,14 +17,17 @@ var products = [];
 var locations = [];
 var mainWord = "";
 
-//var phase = parseInt(queryObj().ph) || 1;
-
 function initialize() {
-    $.getJSON( "messages.json", function( data ) {
+    $.getJSON( json + ".json", function( data ) {
         allData = data;
         getFilterValues();
         updateFilters();
-    });
+    })
+    .done(function() { })
+    .fail(function() { 
+        $('div#loading').addClass('hidden');
+        $('div#nodata').removeClass('hidden'); })
+    .always(function() { });
 };
 
 function clearDisp() {
@@ -295,10 +298,12 @@ function displayWord(targetTable, thatWord) {
 };
 
 function queryObj() {
-    search = location.search;
+    search = location.search.replace(/\//g, '');
     return search.substring(1).split("&").reduce(function(result, value) {
       var parts = value.split('=');
       if (parts[0]) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
       return result;
     }, {})
 };
+
+var json = queryObj().data || "messages";
