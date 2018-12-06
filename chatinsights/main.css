@@ -461,7 +461,7 @@ hr {
     }
     .content > .left,
     .content > .right {
-        width: auto;
+        width: 100%;
     }
     .content > .left {
         float: right;
