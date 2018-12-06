@@ -282,6 +282,13 @@ input[type=week] {
 .controls select:last-of-type {
     margin-right: 30px;
 }
+.controls .inliner,
+.controls label {
+    line-height: 40px;
+}
+.controls label {
+    display: inline-block;
+}
 select {
     padding-right: 26px;
     padding-left: 10px;
