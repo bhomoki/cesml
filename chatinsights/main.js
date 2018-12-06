@@ -161,10 +161,12 @@ function displayData(source, table) {
 
     $.each(source, function(key, value) {
         if (value.sum > 0) {   // throwing away all words that have a sum of 1
+            if (sentiments == 1 && value.pos == 0) return true;
+            if (sentiments == 2 && value.neg == 0) return true;
             var $tr = $('<tr data-table="'+table+'" data-word="'+value.word+'">')
                 .on("click", function(){displayWord($(this).data("table"), $(this).data("word"))})
                 .append(
-                    $('<td class="label1">'+value.word+' ['+value.sum+']</td>'),
+                    $('<td class="label1">'+value.word+(sentiments == 0 ? ' ['+value.sum+']' : '')+'</td>'),
                     $('<td><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></td>'))
                 .appendTo('#' + table);
         }
@@ -211,7 +213,7 @@ function displayBubble(w1, w2) {
 
 function showBubble(value, w1, w2) {
     $('#bubbles').append($(
-        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="words"><div class="label">'+w1+'</div><div class="label">'+w2+'</div></div><div class="text">'+value.text+'</div></div>')
+        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="words"><div class="label">'+w1+'</div><div class="label">'+w2+'</div></div><div class="text">'+value.text+'</div><div class="more"><span class="href">Show full chat ></span></div></div>')
     );
 };
 

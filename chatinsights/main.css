@@ -178,7 +178,10 @@ svg {
 .nowrap {
     white-space: nowrap;
 }
-
+.more {
+    margin-top: 10px;
+    text-align: right;
+}
 
 
 nav {
@@ -319,7 +322,7 @@ table.sent td div:nth-child(1),
     background-color: #5ABCB4;
 }
 table.sent td div span {
-    font-size: 11px; 
+    font-size: 10px; 
     position: absolute;
     left: -25px;
     width: 20px;
