@@ -336,6 +336,7 @@ table td {
 table.sent {
     width: 100%;
     margin-bottom: 50px;
+    font-weight: 700;
 }
 table.sent:not(#second) tr {
     cursor: pointer;
