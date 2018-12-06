@@ -190,7 +190,9 @@ svg {
     margin-top: 10px;
     text-align: right;
 }
-
+*:focus {
+    outline: none !important;
+}
 
 nav {
     position: absolute; left: 0; right: 0; top: 0; z-index: 2;
