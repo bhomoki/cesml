@@ -303,6 +303,13 @@ select {
     -o-appearance: none;
     appearance: none;
 }
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+option:not(:checked) {
+    color: #404040; /* prevent <option>s from becoming transparent as well */
+}
 table {
     border-collapse: collapse;
 }
