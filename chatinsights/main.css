@@ -145,7 +145,7 @@ ul {
     outline: 0;
 }
 .href, a {
-    color: #4CB7EF;
+    color: #1182D0;
     cursor: pointer;
     font-weight: 600;
 }
@@ -353,7 +353,7 @@ table.sent td:nth-child(1) {
     text-align: left;
 }
 table.sent:not(#second) tr td:nth-child(1) {
-    color: #1390D3;
+    color: #1182D0;
 }
 table.sent td:nth-child(2) {
     width: 74%;
