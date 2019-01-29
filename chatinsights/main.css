@@ -96,20 +96,19 @@ select::-moz-focus-inner { /*Remove button padding in FF*/
 ::-webkit-scrollbar-corner        { background: transparent }
 
 ::-webkit-input-placeholder {
-    color: black !important;
-    opacity: .3;
+    color: #909090 !important;
 }
 :-moz-placeholder /* Firefox 18- */ {
-    color: black !important;
-    opacity: .3;
+    color: #909090 !important;
 }
 ::-moz-placeholder /* Firefox 19+ */ {
-    color: black !important;
-    opacity: .3;
+    color: #909090 !important;
 }
 :-ms-input-placeholder {
-    color: #D0D0D0 !important;
-    opacity: 2;
+    color: #909090 !important;
+}
+::placeholder {
+    color: #909090 !important;
 }
 pre {
     margin: 0;
@@ -456,14 +455,19 @@ nav ul li > span.open + ul {
 nav ul li > span.open svg.icon {
     transform: rotate(90deg)
 }
-input[type=text].search {
-    width: 300px;
+input[type=search].search {
+    width: 350px;
     margin: 0;
-    background-color: rgba(0, 0, 0, .03);
-    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .04);
+    border-radius: 8px;
     border: 0;
+    height: 44px;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23707070' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline  x1='23' y1='23' x2='18' y2='18'%3E%3C/line%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px 12px;
+    background-size: 18px 18px;
+    padding: 0 10px 0 50px;
 }
-
 
 
 
