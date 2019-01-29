@@ -503,6 +503,7 @@ div.sent:not(#second) > div {
 div.sent:not(#second) > div:hover {
     -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
     box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
+    background-color: white;
 }
 div.sent > div > div:nth-child(1) {
     white-space: nowrap;
@@ -530,7 +531,6 @@ div.sent#second > div {
     box-shadow: none;
 }
 div.sent#second > div:hover {
-    
     -webkit-box-shadow: none;
     box-shadow: none;
 }
