@@ -484,32 +484,28 @@ div.sent {
     font-weight: 700;
 }
 div.sent > div {
-    /*display: flex;   /* layout */
-    width: 13%;
+    width: 19%;
     min-width: 150px;
-    float: left;  /* layout */
-    margin: 0 0.9% 0.9% 0;  /* layout */
-    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .15); /* layout */
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .15);  /* layout */
+    float: left;
+    margin: 0 0.9% 0.9% 0;
+    /*-webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .15);
+      box-shadow: 0 0 1px 1px rgba(0, 0, 0, .15); */
 }
-div.sent > div > div {
-    /*padding: 3px 5px;  */ /* layout */
-    padding: 2px 5px 0 5px; 
+div.sent div.label1 {
+    padding: 3px 5px 0 5px; 
 }
 div.sent:not(#second) > div {
     cursor: pointer;
     border-radius: 5px;
     padding: 0 5px;
+    background-color: #F6F7F8
 }
 div.sent:not(#second) > div:hover {
-    /* background-color: rgba(0, 20, 40, .05) */   /* layout */
-    -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);  /* layout */
-    box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);  /* layout */
+    -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
+    box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
+    background-color: white;
 }
 div.sent > div > div:nth-child(1) {
-    /*width: 20%;
-    min-width: 160px;
-    max-width: 220px; */ /* layout */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -519,9 +515,8 @@ div.sent:not(#second) > div > div:nth-child(1) {
     color: #1182D0;
 }
 div.sent > div > div:nth-child(2) {
-    /*width: 80%;  */   /* layout */
     text-align: left;
-    padding-left: 25px;
+    padding: 0 0 2px 25px;
 }
 
 
@@ -536,14 +531,11 @@ div.sent#second > div {
     box-shadow: none;
 }
 div.sent#second > div:hover {
-    
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 div.sent#second > div > div:nth-child(1) {
     width: auto;
-    /*min-width: 160px;
-    max-width: 220px;*/   /* layout */
     padding-right: 30px;
 }
 div.sent#second > div > div:nth-child(2) {
@@ -559,8 +551,6 @@ div.sent#second > div > div {
 div.sent > div > div > div,
 .redbar, .greenbar {
     position: relative;
-    /*height: 6px; line-height: 6px;
-    margin: 4px 0; */   /* layout */
     height: 4px; line-height: 4px;
     margin: 5px 0;
     border-radius: 100px;
@@ -583,10 +573,6 @@ div.sent > div > div > div span {
 div.sent.sub > div > div > div {
     height: 4px; line-height: 4px;
     margin: 5px 0;
-}
-div#second > div > div:nth-child(1),
-div#third > div > div:nth-child(1) {
-    /* text-align: right; */ /* layout */
 }
 div#second {
     margin-bottom: 32px;
@@ -734,6 +720,18 @@ div:empty + div {
     }
 }
 
+@media only screen and (max-width: 1080px) {
+    div.sent > div {
+        width: 24%;
+    }    
+}
+
+@media only screen and (max-width: 925px) {
+    div.sent > div {
+        width: 31%;
+    }    
+}
+
 @media only screen and (max-width: 800px) {
     body {
         min-width: 320px;
@@ -751,7 +749,6 @@ div:empty + div {
         display: none
     }
     div.sent > div {
-        width: 46%;
         min-width: 120px;
         margin: 0 1.8% 1.8% 0;
     }
@@ -785,4 +782,10 @@ div:empty + div {
     .bubble {
         min-width: 100%;
     }
+}
+
+@media only screen and (max-width: 640px) {
+    div.sent > div {
+        width: 48%;
+    }    
 }
