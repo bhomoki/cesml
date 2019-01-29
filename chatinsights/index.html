@@ -20,22 +20,33 @@
 
 </head>
  
-<body>
-    <nav>
-        <div class="inner">
-            <div class="logo">
-                Chat<br>Insights
-            </div>
+<body class="navclosed">
+
+    <header class="flex">
+        <div class="flex flexleft">
+            <div><svg class="icon pointer" onclick="toggleNav()"><use xlink:href="icons.svg#menu"></svg></div>
+            <div><div class="logo">&nbsp;</div></div>
+        </div>
+        <div class="centered"><input type="text" placeholder="search" class="search"></div>
+        <div class="flex flexright">
             <div class="account">
                 <img src="user.png">Jane Doe
             </div>
         </div>
+    </header>
+
+    <nav>
+        <ul class="vertical">
+            <li><span data-location="main" class="selected"><svg class="icon"><use xlink:href="icons.svg#circle"></svg>Main</span></li>
+            <li><span data-location="admin"><svg class="icon"><use xlink:href="icons.svg#users"></svg>Admin</span></li>
+            <li><span data-location="settings"><svg class="icon"><use xlink:href="icons.svg#settings"></svg>Settings</span></li>
+        </ul>
     </nav>
 
     <div class="content clearfix">
 
         <h1>Chat Insights</h1>
-        <p style="margin-bottom: 40px">Select product, location and time-frame below.</p>
+        <p style="margin-bottom: 30px">Select product, location and time-frame below.</p>
 
         <div class="controls clearfix">
             <select id="product" onchange="updateFilters()"></select>
@@ -48,34 +59,36 @@
             </div>
         </div>
 
+        <hr>
+
         <div id="loading">Loading &hellip;</div>
         <div id="nodata" class="hidden">No data for these criteria.</div>
 
         <div class="right">
-            <table class="sent" id="second">
-            </table>
-            <table class="sent sub" id="third">
-            </table>
-            <hr class="onlymob">
-
+            <div id="fifth" class="clearfix">
+            </div>
+            <div class="sent" id="second">
+            </div>
+            <div class="sent sub" id="third">
+            </div>
+            <hr id="extrahr" class="hidden">
             <div id="fourth" class="hidden">
-                <hr class="nomob">
                 <div class="bubbles" id="bubbles">
                 </div>
-                <hr class="onlymob">
+                <hr>
             </div>
         </div>
 
         <div class="left">
-            <table class="sent" id="first">
-            </table>
+            <div class="sent" id="first">
+            </div>
         </div>
 
     </div>
 
     <footer>
         <div class="inner">
-            <div class="copyr">&copy; 2018 LogMeIn, Inc.</div>
+            <div class="copyr">&copy; 2019 LogMeIn, Inc.</div>
         </div>
     </footer>
 </body>

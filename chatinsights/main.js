@@ -6,8 +6,6 @@ var allData = null;
 var product = null;
 var locationC = null;
 var week = null;
-var startDate = null;
-var endDate = null;
 var sentiments = 0;
 var biggestSum = 0;
 var weeks = [];
@@ -16,6 +14,7 @@ var word1 = [];
 var products = [];
 var locations = [];
 var mainWord = "";
+var weeksForOneWord = [];
 
 function initialize() {
     $.getJSON( json + ".json", function( data ) {
@@ -30,36 +29,42 @@ function initialize() {
     .always(function() { });
 };
 
-function clearDisp() {
-    $('table#first').empty();
-    $('table#second').empty();
-    $('table#third').empty();
+function clearDisp(withLoading) {
+    $('div#first').empty();
+    $('div#second').empty();
+    $('div#third').empty();
     $('div#fourth').addClass('hidden');
-    $('div#loading').removeClass('hidden');
+    $('div#fifth').empty();
+    if (withLoading) $('div#loading').removeClass('hidden');
     $('div#nodata').addClass('hidden');
 };
 function clearSubDisp() {
-    $('table#second').empty();
-    $('table#third').empty();
+    $('div#second').empty();
+    $('div#third').empty();
     $('div#fourth').addClass('hidden');
+    $('div#fifth').empty();
+};
+
+function doSort(a, b) {
+    return ((a > b) ? -1 : ((a < b) ? 1 : 0));
 };
 
 function sortBySum(a, b){
-  var aName = a.sum;
-  var bName = b.sum; 
-  return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+    var av = a.sum,
+        bv = b.sum; 
+    return doSort(av, bv);
 };
 
 function sortByPos(a, b){
-  var aName = a.pos;
-  var bName = b.pos; 
-  return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+    var av = a.pos,
+        bv = b.pos; 
+    return doSort(av, bv);
 };
 
 function sortByNeg(a, b){
-  var aName = a.neg;
-  var bName = b.neg; 
-  return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+    var av = a.neg,
+        bv = b.neg; 
+    return doSort(av, bv);
 };
 
 function lookupItem(which) {
@@ -82,10 +87,6 @@ function updateFilters() {
     product = $('#product').val();
     locationC = $('#location').val();
     week = $('#week').val();
-    var yr = week.split('_')[0];
-    var wk = week.split('_')[1];
-    startDate = moment(moment().day("Monday").year(yr).week(wk).format('YYYY-MM-DD')).toDate();
-    endDate = moment(startDate).add(7, 'days').toDate();
     filterData();
 };
 
@@ -102,6 +103,7 @@ function getFilterValues() {
     products.sort();
     locations.sort();
     weeks.sort();
+    weeksForOneWord = [];
     $.each(products, function(key, value) {
         $('#product').append($('<option>', {value: value, text: value}));
     });
@@ -112,6 +114,7 @@ function getFilterValues() {
         var yr = value.split('_')[0];
         var wk = value.split('_')[1];
         $('#week').append($('<option>', {value: value, text: 'Week ' + wk + ', ' + yr}));
+        weeksForOneWord.push({week: value, pos: 0, neg: 0})
     });
 
     $("#product").val($("#product option:first").val());
@@ -120,12 +123,14 @@ function getFilterValues() {
 };
 
 function filterData() {
-    clearDisp();
+    clearDisp(true);
     setTimeout(function () {
         words = [];
         $.each(allData, function(key, value) {
+            var momentStamp = moment(value.timestamp); 
+            var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
             if (
-                moment(value.timestamp).isBetween(startDate, endDate) &&
+                computedWeek == week &&
                 value.countrycode == locationC && 
                 value.product == product
             ) {
@@ -157,13 +162,21 @@ function getperc(a, b) {
     return parseFloat(b / a * 100);
 };
 
-function displayData(source, table) {
+function displayData(source, outer) {
     var sorter = sortBySum;
     if (sentiments == 1) sorter = sortByPos;
     if (sentiments == 2) sorter = sortByNeg;
     source.sort(sorter);
-    if (table == 'first') mainWord = "";
-    if (table != 'third') biggestSum = 0;
+    if (outer == 'first') {
+        mainWord = "";
+        $('#' + outer).append('<span class="ihelp">Chat words and sentiments</span><br>')
+    }
+    if (outer == 'second') {
+        $('#' + outer).append('<span class="ihelp">\"'+source[0].word+'\" and related adjectives, '+$("#week :selected").text()+'</span><br>')
+    }
+    if (outer != 'third') {
+        biggestSum = 0;
+    }
 
     //source.shift();  // throwing away the biggest value word
 
@@ -179,25 +192,30 @@ function displayData(source, table) {
         if (value.sum > 0) {   // throwing away all words that have a sum of 1
             if (sentiments == 1 && value.pos == 0) return true;
             if (sentiments == 2 && value.neg == 0) return true;
-            var $tr = $('<tr data-table="'+table+'" data-word="'+value.word+'">')
+            var $tr = $('<div data-table="'+outer+'" data-word="'+value.word+'">')
                 .on("click", function(){displayWord($(this).data("table"), $(this).data("word"))})
                 .append(
-                    $('<td class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</td>'),
-                    $('<td><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></td>'))
-                .appendTo('#' + table);
+                    $('<div class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</div>'),
+                    $('<div><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></div>'))
+                .appendTo('#' + outer);
         }
     });
 
-    $('table.sent td div').removeClass('hidden')
+    if (outer == 'third')
+        $('#extrahr').removeClass('hidden');
+
+    $('div.sent div div div').removeClass('hidden')
     if (sentiments == 1) {
-        $('table.sent td:nth-child(2) div:nth-child(2)').addClass('hidden')
+        $('div.sent div div:nth-child(2) div:nth-child(2)').addClass('hidden')
     }
     if (sentiments == 2) {
-        $('table.sent td:nth-child(2) div:nth-child(1)').addClass('hidden')
+        $('div.sent div div:nth-child(2) div:nth-child(1)').addClass('hidden')
     };
 
-    if (!source.length) 
-        $('div#nodata').removeClass('hidden')
+    if (!source.length) {
+        clearDisp(false);
+        $('div#nodata').removeClass('hidden');
+    };
 
     $('div#loading').addClass('hidden');
 };
@@ -205,9 +223,12 @@ function displayData(source, table) {
 function displayBubble(w1, w2) {
     $('div#fourth').removeClass('hidden');
     $('div#bubbles').empty();
+    $('#bubbles').append('<span class="ihelp">\"'+w1+'\" and \"'+w2+'\"</span><br>');
     $.each(allData, function(key, value) {
+            var momentStamp = moment(value.timestamp); 
+            var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
             if (
-                moment(value.timestamp).isBetween(startDate, endDate) &&
+                computedWeek == week &&
                 value.countrycode == locationC && 
                 value.product == product
             ) {
@@ -252,8 +273,10 @@ function displayWord(targetTable, thatWord) {
     window.scrollTo(0, 0);
 
     $.each(allData, function(key, value) {
+        var momentStamp = moment(value.timestamp); 
+        var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
         if (
-            moment(value.timestamp).isBetween(startDate, endDate) &&
+            week == computedWeek &&
             value.countrycode == locationC && 
             value.product == product
         ) {
@@ -295,6 +318,64 @@ function displayWord(targetTable, thatWord) {
 
     displayData(word1, 'second');
     displayData(word2, 'third');
+
+    collectWord(word1[0].word);
+};
+
+function collectWord(w) {
+    var oneWordInTime = weeksForOneWord.slice();
+    $.each(oneWordInTime, function(key, value) {
+        value.pos = 0;
+        value.neg = 0;
+    });
+    var biggestVal = 0
+
+    $.each(allData, function(key, value) {
+        if (
+            value.countrycode == locationC && 
+            value.product == product
+        ) {
+            if (value.nouns) {
+                $.each(value.nouns, function(key, value1) {
+                    if (value1.word && (value1.word == w)) {
+                        var momentStamp = moment(value.timestamp); 
+                        var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
+                        $.each(value1.adjectives, function(key, value2) {
+                            var obj = oneWordInTime.find(obj => obj.week == computedWeek);
+                            if (obj) {
+                                if (parseFloat(value2.polarity) > 0) {
+                                    obj.pos += parseInt(value2.count);
+                                }
+                                else {
+                                    obj.neg += parseInt(value2.count);
+                                }
+                            }
+                            if (obj.pos > biggestVal)
+                                biggestVal = obj.pos;
+                            if (obj.neg > biggestVal)
+                                biggestVal = obj.neg;
+                        });
+                    }
+                });
+            }
+        }
+    });
+    function drawChart(w, oneWordInTime) {
+        $('div#fifth').empty();
+        $('#fifth').append('<span class="ihelp">\"'+w+'\" week by week</span><br>')
+        var $d1 = $('<div class="chart clearfix">');
+        $.each(oneWordInTime, function(key, value) {
+            var $week1 = $('<div class="col floleft">')
+                .append(
+                    $('<div class="weeklabel">w'+value.week.split('_')[1]+'</div>'),
+                    $('<div class="pval" style="height: '+(value.pos / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.pos+'</span></div>'),
+                    $('<div class="nval" style="height: '+(value.neg / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.neg+'</span></div>'))
+                .appendTo($d1)
+        });
+        $d1.appendTo('#fifth');
+        $('<hr>').appendTo('#fifth');
+    };
+    drawChart(w, oneWordInTime);
 };
 
 function queryObj() {
@@ -304,6 +385,10 @@ function queryObj() {
       if (parts[0]) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
       return result;
     }, {})
+};
+
+function toggleNav() {
+    $('body').toggleClass('navclosed')
 };
 
 var json = queryObj().data || "messages";
