@@ -17,6 +17,12 @@ var mainWord = "";
 var weeksForOneWord = [];
 
 function initialize() {
+    if (isMobile) {
+        //$('body').addClass('mobile');
+        $('body').click(function() {
+            $(this).addClass('navclosed')
+        });
+    };
     $.getJSON( json + ".json", function( data ) {
         allData = data;
         getFilterValues();
@@ -387,8 +393,18 @@ function queryObj() {
     }, {})
 };
 
-function toggleNav() {
-    $('body').toggleClass('navclosed')
+function toggleNav(e) {
+    e.stopPropagation();
+    $('body').toggleClass('navclosed');
+};
+
+function detectMob() {
+    if (window.innerWidth <= 800)
+        return true;
+
+    return false;
 };
 
 var json = queryObj().data || "messages";
+
+var isMobile = detectMob();

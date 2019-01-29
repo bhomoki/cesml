@@ -24,7 +24,7 @@
 
     <header class="flex">
         <div class="flex flexleft">
-            <div><svg class="icon pointer" onclick="toggleNav()"><use xlink:href="icons.svg#menu"></svg></div>
+            <div><svg class="icon pointer" onclick="toggleNav(event || window.event)"><use xlink:href="icons.svg#menu"></svg></div>
             <div><div class="logo">&nbsp;</div></div>
         </div>
         <div class="centered"><input type="text" placeholder="search" class="search"></div>
