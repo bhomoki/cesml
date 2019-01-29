@@ -358,7 +358,7 @@ header svg {
 header {
     height: 60px;
     padding: 0 20px;
-    box-shadow: 0 0 1px 1px rgba(0 , 0, 0, .1);
+    box-shadow: 0 0 4px 1px rgba(0 , 0, 0, .1);
     font-weight: 500;
     background-color: #FFFFFF; 
     position: fixed; top: 0; left: 0; right: 0; z-index: 10;
@@ -392,7 +392,6 @@ nav {
 }
 body.navclosed nav {
     transform: translate3d(-200px, 0, 0);
-    opacity: 0;
 }
 body:not(.navclosed) .content {
     padding-left: 220px;
@@ -764,15 +763,15 @@ div:empty + div {
     body:not(.navclosed) .content {
        padding-left: 20px;
     }
+    body.navclosed nav {
+        transform: translate3d(-260px, 0, 0);
+    }
     nav {
-        -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .1);
-        box-shadow:  1px 1px 1px 1px rgba(0, 0, 0, .1);
+        -webkit-box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, .1);
+        box-shadow:  1px 1px 4px 1px rgba(0, 0, 0, .1);
         background: white;
         width: 250px;
         max-width: 90vw;
-    }
-    body.navclosed nav {
-        transform: translate3d(-250px, 0, 0);
     }
     .col {
         font-size: 11px;
