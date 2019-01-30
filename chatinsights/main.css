@@ -185,6 +185,9 @@ svg {
     margin-top: 10px;
     text-align: right;
 }
+.nointeract {
+    pointer-events: none !important;
+}
 .flex {
     display: flex;
     flex-direction: row;
@@ -500,7 +503,8 @@ div.sent:not(#second) > div {
     padding: 0 5px;
     background-color: rgba(10, 100, 150, .06);
 }
-div.sent:not(#second) > div:hover {
+div.sent:not(#second) > div:hover,
+div.sent:not(#second) > div.selected {
     -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
     box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
     background-color: white;

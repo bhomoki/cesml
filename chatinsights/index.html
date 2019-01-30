@@ -51,9 +51,9 @@
         <p style="margin-bottom: 30px">Select product, location and time-frame below.</p>
 
         <div class="controls clearfix">
-            <select id="product" onchange="updateFilters()"></select>
-            <select id="location" onchange="updateFilters()"></select>
-            <select id="week" onchange="updateFilters()"></select>
+            <select id="product" onchange="updateFilters(true)"></select>
+            <select id="location" onchange="updateFilters(true)"></select>
+            <select id="week" onchange="updateFilters(true)"></select>
             <div class="nowrap">
                 <label><input type="radio" name="sent" onclick="sentFilter(1)"><span class="greenbar"></span></label>
                 <label><input type="radio" name="sent" onclick="sentFilter(2)"><span class="redbar"></span></label>

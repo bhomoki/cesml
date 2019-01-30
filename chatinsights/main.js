@@ -13,7 +13,7 @@ var words = [];
 var word1 = [];
 var products = [];
 var locations = [];
-var mainWord = "";
+var mainWord = '';
 var weeksForOneWord = [];
 
 function initialize() {
@@ -26,7 +26,7 @@ function initialize() {
     $.getJSON( json + ".json", function( data ) {
         allData = data;
         getFilterValues();
-        updateFilters();
+        updateFilters(true);
     })
     .done(function() { })
     .fail(function() { 
@@ -86,13 +86,15 @@ function lookupItem(which) {
 
 function sentFilter(which) {
     sentiments = which;
+    mainWord = '';
     filterData();
 };
 
-function updateFilters() {
+function updateFilters(resetWord) {
     product = $('#product').val();
     locationC = $('#location').val();
     week = $('#week').val();
+    if (resetWord) mainWord = '';
     filterData();
 };
 
@@ -140,7 +142,6 @@ function filterData() {
                 value.countrycode == locationC && 
                 value.product == product
             ) {
-                //console.log(JSON.stringify(value));
                 if (value.nouns) {
                     $.each(value.nouns, function(key, value1) {
                         if (value1.word) {
@@ -174,11 +175,13 @@ function displayData(source, outer) {
     if (sentiments == 2) sorter = sortByNeg;
     source.sort(sorter);
     if (outer == 'first') {
-        mainWord = "";
         $('#' + outer).append('<span class="ihelp">Chat words and sentiments ('+$("#week :selected").text()+')</span><br>')
     }
     if (outer == 'second') {
-        $('#' + outer).append('<span class="ihelp">\"'+source[0].word+'\" and related adjectives ('+$("#week :selected").text()+')</span><br>')
+        if (source[0] && source[0].word)
+            $('#' + outer).append('<span class="ihelp">\"'+source[0].word+'\" and related adjectives ('+$("#week :selected").text()+')</span><br>');
+        else
+            $('#' + outer).append('<span class="ihelp">This word is not available for '+$("#week :selected").text()+'</span><br>');
     }
     if (outer != 'third') {
         biggestSum = 0;
@@ -198,8 +201,9 @@ function displayData(source, outer) {
         if (value.sum > 0) {   // throwing away all words that have a sum of 1
             if (sentiments == 1 && value.pos == 0) return true;
             if (sentiments == 2 && value.neg == 0) return true;
-            var $tr = $('<div data-table="'+outer+'" data-word="'+value.word+'">')
-                .on("click", function(){displayWord($(this).data("table"), $(this).data("word"))})
+            $('<div data-table="'+outer+'" data-word="'+value.word+'">')
+                .on("click", function(){displayWord($(this).data("table"), $(this).data("word")); $('#'+$(this).data("table")+' div').removeClass('selected'); $(this).addClass('selected')})
+                .toggleClass('selected', mainWord === value.word)
                 .append(
                     $('<div class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</div>'),
                     $('<div><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></div>'))
@@ -220,7 +224,8 @@ function displayData(source, outer) {
 
     if (!source.length) {
         clearDisp(false);
-        $('div#nodata').removeClass('hidden');
+        if (!mainWord.length) 
+            $('div#nodata').removeClass('hidden');
     };
 
     $('div#loading').addClass('hidden');
@@ -229,7 +234,7 @@ function displayData(source, outer) {
 function displayBubble(w1, w2) {
     $('div#fourth').removeClass('hidden');
     $('div#bubbles').empty();
-    $('#bubbles').append('<span class="ihelp">\"'+w1+'\" and \"'+w2+'\"</span><br>');
+    $('#bubbles').append('<span class="ihelp">\"'+w1+'\" and \"'+w2+'\" ('+$("#week :selected").text()+')</span><br>');
     $.each(allData, function(key, value) {
             var momentStamp = moment(value.timestamp); 
             var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
@@ -261,7 +266,9 @@ function showBubble(value, w1, w2) {
 };
 
 function displayWord(targetTable, thatWord) {
-    if (!thatWord.length) return;
+    if (!thatWord.length) {
+        return;
+    };
     if (targetTable == 'first') {
         mainWord = thatWord;
     };
@@ -270,7 +277,7 @@ function displayWord(targetTable, thatWord) {
     };
     if (targetTable == 'third') {
         displayBubble(mainWord, thatWord);
-        return
+        return;
     };
     clearSubDisp();
     word1 = [];
@@ -325,10 +332,14 @@ function displayWord(targetTable, thatWord) {
     displayData(word1, 'second');
     displayData(word2, 'third');
 
-    collectWord(word1[0].word);
+    collectWord(word1[0] ? word1[0].word : mainWord);
 };
 
 function collectWord(w) {
+    if (!w.length) {
+        $('#fifth').append('<span class="ihelp">Not now</span><br>');
+        return
+    };
     var oneWordInTime = weeksForOneWord.slice();
     $.each(oneWordInTime, function(key, value) {
         value.pos = 0;
@@ -368,7 +379,7 @@ function collectWord(w) {
     });
     function drawChart(w, oneWordInTime) {
         $('div#fifth').empty();
-        $('#fifth').append('<span class="ihelp">\"'+w+'\" (all weeks)</span><br>')
+        $('#fifth').append('<span class="ihelp">\"'+w+'\" (all available weeks)</span><br>')
         var $d1 = $('<div class="chart clearfix">');
         $.each(oneWordInTime, function(key, value) {
             var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'" onclick="jumpWeek($(this))">');
@@ -380,7 +391,9 @@ function collectWord(w) {
             $week1.appendTo($colouter);
             $colouter.appendTo($d1);
             if (value.week === week)
-                $colouter.addClass('selected');
+                $colouter.addClass('selected nointeract');
+            if (value.pos + value.neg == 0)
+                $colouter.addClass('nointeract');
         });
         $d1.appendTo('#fifth');
         $('<hr>').appendTo('#fifth');
@@ -389,12 +402,12 @@ function collectWord(w) {
 };
 
 function jumpWeek(which) {
-    var whichWord = which.data( "word" );
-    var whichWeek = which.data( "week" );
+    var whichWord = which.data("word");
+    var whichWeek = which.data("week");
     if (whichWeek === week)
         return;
     $('#week').val(whichWeek);
-    updateFilters();
+    updateFilters(false);
     displayWord('first', whichWord);
 };
 
