@@ -175,10 +175,10 @@ function displayData(source, outer) {
     source.sort(sorter);
     if (outer == 'first') {
         mainWord = "";
-        $('#' + outer).append('<span class="ihelp">Chat words and sentiments</span><br>')
+        $('#' + outer).append('<span class="ihelp">Chat words and sentiments ('+$("#week :selected").text()+')</span><br>')
     }
     if (outer == 'second') {
-        $('#' + outer).append('<span class="ihelp">\"'+source[0].word+'\" and related adjectives, '+$("#week :selected").text()+'</span><br>')
+        $('#' + outer).append('<span class="ihelp">\"'+source[0].word+'\" and related adjectives ('+$("#week :selected").text()+')</span><br>')
     }
     if (outer != 'third') {
         biggestSum = 0;
@@ -368,7 +368,7 @@ function collectWord(w) {
     });
     function drawChart(w, oneWordInTime) {
         $('div#fifth').empty();
-        $('#fifth').append('<span class="ihelp">\"'+w+'\" week by week</span><br>')
+        $('#fifth').append('<span class="ihelp">\"'+w+'\" (all weeks)</span><br>')
         var $d1 = $('<div class="chart clearfix">');
         $.each(oneWordInTime, function(key, value) {
             var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'" onclick="jumpWeek($(this))">');
@@ -393,10 +393,9 @@ function jumpWeek(which) {
     var whichWeek = which.data( "week" );
     if (whichWeek === week)
         return;
-    week = whichWeek;
     $('#week').val(whichWeek);
+    updateFilters();
     displayWord('first', whichWord);
-    //console.log(whichWord, whichWeek);
 };
 
 function queryObj() {

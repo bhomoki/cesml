@@ -516,7 +516,7 @@ div.sent:not(#second) > div > div:nth-child(1) {
 }
 div.sent > div > div:nth-child(2) {
     text-align: left;
-    padding: 0 0 2px 25px;
+    padding: 0 8px 2px 25px;
 }
 
 
