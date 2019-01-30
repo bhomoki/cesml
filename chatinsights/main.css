@@ -498,7 +498,7 @@ div.sent:not(#second) > div {
     cursor: pointer;
     border-radius: 5px;
     padding: 0 5px;
-    background-color: #F6F7F8
+    background-color: rgba(10, 100, 150, .06);
 }
 div.sent:not(#second) > div:hover {
     -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
@@ -654,7 +654,21 @@ div:empty + div {
 .chart {
     width: 100%;
     max-width: 800px;
-    margin-top: 30px;
+}
+.colouter {
+    width: 7.6%;
+    padding: 30px 0.8% 40px 0.8%;
+    border-radius: 5px;
+}
+.colouter:not(.selected) {
+    cursor: pointer;
+}
+.colouter:not(.selected):hover {
+    background-color: rgba(10, 100, 150, .12);
+}
+.colouter.selected {
+    -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
+    box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
 }
 .col {
     font-size: 13px;
@@ -662,8 +676,8 @@ div:empty + div {
     text-align: center;
     position: relative;
     height: 300px;
-    width: 6%;
-    margin: 0 0.8% 40px 0.8%;
+    /*width: 100%;*/
+    /*margin: 0 0.8% 40px 0.8%;*/
 }
 .col > div {
     vertical-align: bottom;

@@ -371,17 +371,32 @@ function collectWord(w) {
         $('#fifth').append('<span class="ihelp">\"'+w+'\" week by week</span><br>')
         var $d1 = $('<div class="chart clearfix">');
         $.each(oneWordInTime, function(key, value) {
-            var $week1 = $('<div class="col floleft">')
+            var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'" onclick="jumpWeek($(this))">');
+            var $week1 = $('<div class="col">')
                 .append(
                     $('<div class="weeklabel">w'+value.week.split('_')[1]+'</div>'),
                     $('<div class="pval" style="height: '+(value.pos / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.pos+'</span></div>'),
-                    $('<div class="nval" style="height: '+(value.neg / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.neg+'</span></div>'))
-                .appendTo($d1)
+                    $('<div class="nval" style="height: '+(value.neg / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.neg+'</span></div>'));
+            $week1.appendTo($colouter);
+            $colouter.appendTo($d1);
+            if (value.week === week)
+                $colouter.addClass('selected');
         });
         $d1.appendTo('#fifth');
         $('<hr>').appendTo('#fifth');
     };
     drawChart(w, oneWordInTime);
+};
+
+function jumpWeek(which) {
+    var whichWord = which.data( "word" );
+    var whichWeek = which.data( "week" );
+    if (whichWeek === week)
+        return;
+    week = whichWeek;
+    $('#week').val(whichWeek);
+    displayWord('first', whichWord);
+    //console.log(whichWord, whichWeek);
 };
 
 function queryObj() {
