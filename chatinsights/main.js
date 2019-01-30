@@ -23,6 +23,7 @@ function initialize() {
             $(this).addClass('navclosed')
         });
     };
+    clearDisp();
     $.getJSON( json + ".json", function( data ) {
         allData = data;
         getFilterValues();
@@ -32,15 +33,16 @@ function initialize() {
     .fail(function() { 
         $('div#loading').addClass('hidden');
         $('div#nodata').removeClass('hidden'); })
-    .always(function() { });
+    .always(function() { 
+    });
 };
 
-function clearDisp(withLoading) {
-    $('div#first').empty();
+function clearDisp() {
+    $('div#first').addClass('invisible');
     $('div#second').empty();
     $('div#fourth').addClass('hidden');
     $('div#fifth').empty();
-    if (withLoading) $('div#loading').removeClass('hidden');
+    $('div#loading').removeClass('hidden');
     $('div#nodata').addClass('hidden');
 };
 function clearSubDisp() {
@@ -85,6 +87,7 @@ function lookupItem(which) {
 function sentFilter(which) {
     sentiments = which;
     mainWord = '';
+    clearDisp();
     filterData();
 };
 
@@ -94,6 +97,7 @@ function updateFilters(resetWord) {
     week = $('#week').val();
     if (resetWord) {
         mainWord = '';
+        clearDisp();
         $('#extrahr').addClass('hidden');
     };
     filterData();
@@ -132,7 +136,6 @@ function getFilterValues() {
 };
 
 function filterData() {
-    clearDisp(true);
     setTimeout(function () {
         words = [];
         $.each(allData, function(key, value) {
@@ -176,15 +179,16 @@ function displayData(source, outer) {
     if (sentiments == 2) sorter = sortByNeg;
     source.sort(sorter);
     if (outer == 'first') {
-        $('#' + outer).append('<h2>Chat words and sentiments ('+$("#week :selected").text()+')</h2>')
-        $('#extrahr').addClass('hidden');
-    }
-    else {
-        $('#extrahr').removeClass('hidden');
-    }
+        $('div#first').empty().removeClass('invisible');
+        $('#' + outer).append($('<h2>Chat words and sentiments ('+$("#week :selected").text()+')</h2>')
+                      .append('<span class="ihelp">Select word to reveal details</span>'));
+    };
     if (outer == 'second') {
-        if (mainWord.length)
-            $('#second').append('<h2>Adjectives related to \"'+mainWord+'\" ('+$("#week :selected").text()+')</h2>');
+        $('#extrahr').removeClass('hidden');
+        if (mainWord.length) {
+            $('#second').append($('<h2>Adjectives related to \"'+mainWord+'\" ('+$("#week :selected").text()+')</h2>')
+                        .append('<span class="ihelp">Select adjective to display chats</span>'));
+        }
         else
             $('#second').append('<h2>This word is not available for '+$("#week :selected").text()+'</h2>');
     }
@@ -207,7 +211,7 @@ function displayData(source, outer) {
             if (sentiments == 1 && value.pos == 0) return true;
             if (sentiments == 2 && value.neg == 0) return true;
             $('<div data-table="'+outer+'" data-word="'+value.word+'">')
-                .on("click", function(){displayWord($(this).data("table"), $(this).data("word").toString()); $('#'+$(this).data("table")+' div').removeClass('selected'); $(this).addClass('selected')})
+                .on("click", function(){displayWord($(this).data("table"), $(this).data("word").toString(), true); $('#'+$(this).data("table")+' div').removeClass('selected'); $(this).addClass('selected')})
                 .toggleClass('selected', mainWord === value.word)
                 .append(
                     $('<div class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</div>'),
@@ -224,9 +228,11 @@ function displayData(source, outer) {
         $('div.sent div div:nth-child(2) div:nth-child(1)').addClass('hidden')
     };
     if (!source.length) {
-        clearDisp(false);
-        if (!mainWord.length) 
+        clearDisp();
+        if (!mainWord.length) {
+            $('div#first').empty();
             $('div#nodata').removeClass('hidden');
+        }
     };
     $('div#loading').addClass('hidden');
 };
@@ -265,7 +271,7 @@ function showBubble(value, w1, w2) {
     );
 };
 
-function displayWord(targetTable, thatWord) {
+function displayWord(targetTable, thatWord, scrollToTop) {
     if (!thatWord.length) {
         return;
     };
@@ -280,7 +286,8 @@ function displayWord(targetTable, thatWord) {
     word1 = [];
     word2 = [];
     filteredWords = [];
-    window.scrollTo(0, 0);
+    if (scrollToTop) 
+        window.scrollTo(0, 0);
 
     $.each(allData, function(key, value) {
         var momentStamp = moment(value.timestamp); 
@@ -373,7 +380,8 @@ function collectWord(w) {
     });
     function drawChart(w, oneWordInTime) {
         $('div#fifth').empty();
-        $('#fifth').append('<h2>\"'+w+'\" (all available weeks)</h2>')
+        $('#fifth').append($('<h2>\"'+w+'\" (all available weeks)</h2>')
+                   .append('<span class="ihelp">Select week to display adjectives</span>'));
         var $d1 = $('<div class="chart clearfix">');
         $.each(oneWordInTime, function(key, value) {
             var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'" onclick="jumpWeek($(this))">');
@@ -402,7 +410,7 @@ function jumpWeek(which) {
         return;
     $('#week').val(whichWeek);
     updateFilters(false);
-    displayWord('first', whichWord);
+    displayWord('first', whichWord, false);
 };
 
 function queryObj() {
