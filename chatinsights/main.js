@@ -74,7 +74,7 @@ function sortByNeg(a, b){
 };
 
 function lookupItem(which) {
-    var thisWord = which.data( "word" );
+    var thisWord = which.data("word").toString();
     $.each(sampleData, function(key, value) {
         if (thisWord == value.word) {
             ordinal = key;
@@ -202,7 +202,7 @@ function displayData(source, outer) {
             if (sentiments == 1 && value.pos == 0) return true;
             if (sentiments == 2 && value.neg == 0) return true;
             $('<div data-table="'+outer+'" data-word="'+value.word+'">')
-                .on("click", function(){displayWord($(this).data("table"), $(this).data("word")); $('#'+$(this).data("table")+' div').removeClass('selected'); $(this).addClass('selected')})
+                .on("click", function(){displayWord($(this).data("table"), $(this).data("word").toString()); $('#'+$(this).data("table")+' div').removeClass('selected'); $(this).addClass('selected')})
                 .toggleClass('selected', mainWord === value.word)
                 .append(
                     $('<div class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</div>'),
@@ -402,7 +402,7 @@ function collectWord(w) {
 };
 
 function jumpWeek(which) {
-    var whichWord = which.data("word");
+    var whichWord = which.data("word").toString();
     var whichWeek = which.data("week");
     if (whichWeek === week)
         return;
