@@ -285,8 +285,15 @@ function displayBubble(w1, w2) {
 };
 
 function showBubble(value, w1, w2) {
+    function highFunc(text, repl) {
+        var reggaeEx = new RegExp(repl, "ig");
+        var replaceWith = "<span class=high>"+repl+"</span>";
+        return text.replace(reggaeEx, replaceWith);
+    }
+    value.text = highFunc(highFunc(value.text, w1), w2);
+
     $('#bubbles').append($(
-        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="words"><div class="label">'+w1+'</div><div class="label">'+w2+'</div></div><div class="text">'+value.text+'</div><div class="more"><span class="href">Show full chat ></span></div></div>')
+        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="text">'+value.text+'</div><div class="more"><span class="href">Show full chat ></span></div></div>')
     );
 };
 
@@ -295,6 +302,7 @@ function displayWord(targetTable, thatWord, scrollToTop) {
         return;
     };
     if (targetTable == 'first') {
+        adjWord = '';
         if ((thatWord == mainWord) && scrollToTop) {
             updateFilters(true);
             window.scrollTo(0, 0);
@@ -414,7 +422,10 @@ function collectWord(w) {
                    .append('<span class="ihelp">Select week to display adjectives</span>'));
         var $d1 = $('<div class="chart clearfix">');
         $.each(oneWordInTime, function(key, value) {
-            var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'" onclick="jumpWeek($(this))">');
+            var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'">')
+                .on("click", function(){jumpWeek($(this))})
+                .toggleClass('selected', value.week === week)
+                .toggleClass('nointeract', value.pos + value.neg == 0)
             var $week1 = $('<div class="col">')
                 .append(
                     $('<div class="weeklabel">w'+value.week.split('_')[1]+'</div>'),
@@ -422,10 +433,6 @@ function collectWord(w) {
                     $('<div class="nval" style="height: '+(value.neg / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.neg+'</span></div>'));
             $week1.appendTo($colouter);
             $colouter.appendTo($d1);
-            if (value.week === week)
-                $colouter.addClass('selected');
-            if (value.pos + value.neg == 0)
-                $colouter.addClass('nointeract');
         });
         $d1.appendTo('#fifth');
     };

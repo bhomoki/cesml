@@ -172,6 +172,9 @@ h2 {
 .bold {
     font-weight: 700
 }
+.high {
+    background-color: #FDF1C9;
+}
 svg {
     color: currentColor;
     fill: currentColor;
@@ -516,12 +519,18 @@ div.sent > div {
     cursor: pointer;
     border-radius: 5px;
     padding: 0 5px;
-    background-color: rgba(10, 100, 150, .06);
 }
 div.sent > div:hover,
 div.sent > div.selected {
     -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
     box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
+}
+div.sent > div,
+div.sent > div:hover,
+div.sent > div.selected:hover {
+    background-color: rgba(10, 100, 150, .06);
+}
+div.sent > div.selected {
     background-color: white;
 }
 div.sent > div > div:nth-child(1) {
@@ -606,7 +615,7 @@ hr {
 .bubble .label {
     display: inline-block; 
     white-space: nowrap;
-    padding: 3px 10px 1px 10px;
+    padding: 4px 10px 3px 10px;
     margin: 0 3px 3px 0;
     border-radius: 100px;
     font-size: 13px; font-weight: 700;
@@ -641,9 +650,6 @@ div:empty + div {
     border-radius: 5px;
     cursor: pointer;
 }
-/*.colouter:not(.selected) {
-    cursor: pointer;
-}*/
 .colouter.selected {
     -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
     box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
@@ -657,8 +663,6 @@ div:empty + div {
     text-align: center;
     position: relative;
     height: 300px;
-    /*width: 100%;*/
-    /*margin: 0 0.8% 40px 0.8%;*/
 }
 .col > div {
     vertical-align: bottom;
