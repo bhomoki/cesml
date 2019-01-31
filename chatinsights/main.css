@@ -195,7 +195,6 @@ svg {
     margin-top: 10px;
     text-align: right;
 }
-.selected,
 .nointeract {
     pointer-events: none !important;
 }
@@ -420,7 +419,7 @@ body:not(.navclosed) .content {
 }
 nav > ul {
     margin: 20px 20px 20px 0;
-    font-weight: 500;
+    font-weight: 700;
 }
 nav ul ul {
     height: 0; overflow: hidden; opacity: 0;
@@ -640,16 +639,17 @@ div:empty + div {
     width: 7.6%;
     padding: 30px 0.8% 40px 0.8%;
     border-radius: 5px;
-}
-.colouter:not(.selected) {
     cursor: pointer;
 }
-.colouter:not(.selected):hover {
-    background-color: rgba(10, 100, 150, .12);
-}
+/*.colouter:not(.selected) {
+    cursor: pointer;
+}*/
 .colouter.selected {
     -webkit-box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
     box-shadow: 0 0 1px 1px rgba(17, 130, 208, 1);
+}
+.colouter:hover {
+    background-color: rgba(10, 100, 150, .12);
 }
 .col {
     font-size: 13px;

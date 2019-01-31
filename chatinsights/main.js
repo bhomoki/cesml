@@ -14,6 +14,7 @@ var word1 = [];
 var products = [];
 var locations = [];
 var mainWord = '';
+var adjWord = '';
 var weeksForOneWord = [];
 
 function initialize() {
@@ -49,6 +50,13 @@ function clearSubDisp() {
     $('div#second').empty();
     $('div#fourth').addClass('hidden');
     $('div#fifth').empty();
+};
+function clearSubSubDisp() {
+    $('div#second').empty();
+    $('div#fourth').addClass('hidden');
+};
+function clearSubSubSubDisp() {
+    $('div#fourth').addClass('hidden');
 };
 
 function doSort(a, b) {
@@ -206,12 +214,23 @@ function displayData(source, outer) {
 
     });
 
+    function wordClick(that) {
+        displayWord(that.data("table"),that.data("word").toString(), true); 
+        if (that.hasClass('selected')) {
+            that.removeClass('selected')
+        }
+        else {
+            $('#'+that.data("table")+' div').removeClass('selected'); 
+            that.addClass('selected');
+        };
+    };
+
     $.each(source, function(key, value) {
         if (value.sum > 0) {   // throwing away all words that have a sum of 1
             if (sentiments == 1 && value.pos == 0) return true;
             if (sentiments == 2 && value.neg == 0) return true;
             $('<div data-table="'+outer+'" data-word="'+value.word+'">')
-                .on("click", function(){displayWord($(this).data("table"), $(this).data("word").toString(), true); $('#'+$(this).data("table")+' div').removeClass('selected'); $(this).addClass('selected')})
+                .on("click", function(){wordClick($(this))})
                 .toggleClass('selected', mainWord === value.word)
                 .append(
                     $('<div class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</div>'),
@@ -276,9 +295,20 @@ function displayWord(targetTable, thatWord, scrollToTop) {
         return;
     };
     if (targetTable == 'first') {
+        if ((thatWord == mainWord) && scrollToTop) {
+            updateFilters(true);
+            window.scrollTo(0, 0);
+            return
+        };
         mainWord = thatWord;
     };
     if (targetTable == 'second') {
+        if (thatWord == adjWord) {
+            adjWord = '';
+            clearSubSubSubDisp();
+            return;
+        };
+        adjWord = thatWord;
         displayBubble(mainWord, thatWord);
         return;
     };
@@ -398,7 +428,6 @@ function collectWord(w) {
                 $colouter.addClass('nointeract');
         });
         $d1.appendTo('#fifth');
-        //$('<hr>').appendTo('#fifth');
     };
     drawChart(w, oneWordInTime);
 };
@@ -406,8 +435,11 @@ function collectWord(w) {
 function jumpWeek(which) {
     var whichWord = which.data("word").toString();
     var whichWeek = which.data("week");
-    if (whichWeek === week)
+    if (whichWeek === week && which.hasClass('selected')) {
+        which.removeClass('selected');
+        clearSubSubDisp();
         return;
+    };
     $('#week').val(whichWeek);
     updateFilters(false);
     displayWord('first', whichWord, false);
