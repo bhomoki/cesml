@@ -243,8 +243,10 @@ svg {
     outline: none !important;
 }
 #loading {
-    position: absolute;
-    top: 185px;
+    position: relative;
+}
+#loading span {
+    position: absolute; top: -65px;
     background: white;
     padding: 0 10px;
     margin-left: -10px;
@@ -774,7 +776,7 @@ div:empty + div {
         display: none
     }
     hr {
-        margin: 40px -20px;
+        margin: 50px -20px;
     }
     body:not(.navclosed) .content {
        padding-left: 20px;
