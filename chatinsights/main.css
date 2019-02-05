@@ -548,7 +548,7 @@ div.sent div.label1 {
     font-weight: 700;
     text-align: left;
     color: #1182D0;
-    line-height: 1;
+    line-height: normal;
     position: absolute; right: 0;
     width: calc(100% - 50px);
     height: 100%;
