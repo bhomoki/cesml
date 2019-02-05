@@ -94,9 +94,7 @@ function lookupItem(which) {
 
 function sentFilter(which) {
     sentiments = which;
-    mainWord = '';
-    clearDisp();
-    filterData();
+    updateFilters(true);
 };
 
 function updateFilters(resetWord) {
@@ -226,15 +224,18 @@ function displayData(source, outer) {
     };
 
     $.each(source, function(key, value) {
-        if (value.sum > 0) {   // throwing away all words that have a sum of 1
+        if (value.sum > 0) {   // throwing away all words that have a sum of this int or less
             if (sentiments == 1 && value.pos == 0) return true;
             if (sentiments == 2 && value.neg == 0) return true;
+            var subsum = value.sum;
+            if (sentiments == 1) subsum = value.pos;
+            if (sentiments == 2) subsum = value.neg;
             $('<div data-table="'+outer+'" data-word="'+value.word+'">')
                 .on("click", function(){wordClick($(this))})
                 .toggleClass('selected', mainWord === value.word)
                 .append(
-                    $('<div class="label1">'+value.word+(sentiments == 0 ? ' &nbsp;<span class="sum">'+value.sum+'</span>' : '')+'</div>'),
-                    $('<div><div style="width: '+getperc(biggestSum, value.pos)+'%"><span>'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span>'+value.neg+'</span></div></div>'))
+                    $('<div class="label1"><span>'+value.word+(' &nbsp;<span class="sum">'+subsum+'</span>')+'</span></div>'),
+                    $('<div class="values1"><div style="height: '+getperc(biggestSum, value.pos)+'%"><span data-v="'+value.pos+'">'+value.pos+'</span></div><div style="height: '+getperc(biggestSum, value.neg)+'%"><span data-v="'+value.neg+'">'+value.neg+'</span></div></div>'))
                 .appendTo('#' + outer);
         }
     });
@@ -429,8 +430,8 @@ function collectWord(w) {
             var $week1 = $('<div class="col">')
                 .append(
                     $('<div class="weeklabel">w'+value.week.split('_')[1]+'</div>'),
-                    $('<div class="pval" style="height: '+(value.pos / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.pos+'</span></div>'),
-                    $('<div class="nval" style="height: '+(value.neg / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.neg+'</span></div>'));
+                    $('<div class="pval" style="height: '+(value.pos / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.pos+'</span></div>').toggleClass('hidden', sentiments == 2),
+                    $('<div class="nval" style="height: '+(value.neg / biggestVal * 100)+'%">&nbsp;<span class="val">'+value.neg+'</span></div>').toggleClass('hidden', sentiments == 1));
             $week1.appendTo($colouter);
             $colouter.appendTo($d1);
         });
