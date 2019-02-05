@@ -234,7 +234,7 @@ function displayData(source, outer) {
                 .on("click", function(){wordClick($(this))})
                 .toggleClass('selected', mainWord === value.word)
                 .append(
-                    $('<div class="label1"><span>'+value.word+(' &nbsp;<span class="sum">'+subsum+'</span>')+'</span></div>'),
+                    $('<div class="label1 breakword"><span>'+value.word+(' &nbsp;<span class="sum">'+subsum+'</span>')+'</span></div>'),
                     $('<div class="values1"><div style="height: '+getperc(biggestSum, value.pos)+'%"><span data-v="'+value.pos+'">'+value.pos+'</span></div><div style="height: '+getperc(biggestSum, value.neg)+'%"><span data-v="'+value.neg+'">'+value.neg+'</span></div></div>'))
                 .appendTo('#' + outer);
         }
@@ -294,7 +294,7 @@ function showBubble(value, w1, w2) {
     value.text = highFunc(highFunc(value.text, w1), w2);
 
     $('#bubbles').append($(
-        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="text">'+value.text+'</div><div class="more"><span class="href">Show full chat ></span></div></div>')
+        '<div class="bubble"><div class="props"><div class="label">'+product+'</div><div class="label">'+value.countrycode+', '+value.city+'</div><div class="label">'+moment(value.timestamp).format('LLL')+'</div></div><div class="text breakword">'+value.text+'</div><div class="more"><span class="href">Show full chat ></span></div></div>')
     );
 };
 
@@ -426,7 +426,7 @@ function collectWord(w) {
             var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'">')
                 .on("click", function(){jumpWeek($(this))})
                 .toggleClass('selected', value.week === week)
-                .toggleClass('nointeract', value.pos + value.neg == 0)
+                .toggleClass('nointeract', value.pos + value.neg == 0 || sentiments == 1 && value.pos == 0 || sentiments == 2 && value.neg == 0)
             var $week1 = $('<div class="col">')
                 .append(
                     $('<div class="weeklabel">w'+value.week.split('_')[1]+'</div>'),
