@@ -361,6 +361,7 @@ input[type=week] {
     position: relative; top: 4px;
 }
 select {
+    max-width: 150px;
     padding-right: 26px;
     padding-left: 10px;
     line-height: 1;
