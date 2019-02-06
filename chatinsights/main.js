@@ -15,6 +15,7 @@ var products = [];
 var locations = [];
 var mainWord = '';
 var adjWord = '';
+var searchWord = '';
 var weeksForOneWord = [];
 
 function initialize() {
@@ -35,6 +36,14 @@ function initialize() {
         $('div#loading').addClass('hidden');
         $('div#nodata').removeClass('hidden'); })
     .always(function() { 
+    });
+    /*$('input.search').on('keypress',function(e) {
+        if (e.which == 13) {
+        }
+    });*/
+    $('input.search').on('search', function (e) {
+        searchWord = e.target.value;
+        updateFilters(true);
     });
 };
 
@@ -154,7 +163,7 @@ function filterData() {
             ) {
                 if (value.nouns) {
                     $.each(value.nouns, function(key, value1) {
-                        if (value1.word) {
+                        if ((value1.word && searchWord.length && value1.word.toLowerCase().indexOf(searchWord.toLowerCase()) > -1) || value1.word && !searchWord.length) {
                             if (!words.find(obj => obj.word == value1.word)) {
                                 words.push({word: value1.word, sum: 0, neg: 0, pos: 0});
                             };
@@ -243,7 +252,7 @@ function displayData(source, outer) {
     $('div.sent div div div').removeClass('hidden')
     if (sentiments == 1) {
         $('div.sent div div:nth-child(2) div:nth-child(2)').addClass('hidden')
-    }
+    };
     if (sentiments == 2) {
         $('div.sent div div:nth-child(2) div:nth-child(1)').addClass('hidden')
     };
