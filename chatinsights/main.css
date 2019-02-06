@@ -497,6 +497,8 @@ nav ul li > span.open svg.icon {
     transform: rotate(90deg)
 }
 input[type=search].search {
+    -moz-appearance: none;
+    -webkit-appearance: none;
     width: 350px;
     margin: 0;
     background-color: rgba(0, 0, 0, .04);

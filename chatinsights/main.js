@@ -430,7 +430,7 @@ function collectWord(w) {
     function drawChart(w, oneWordInTime) {
         $('div#fifth').empty();
         $('#fifth').append($('<h2>\"'+w+'\" (all available weeks)</h2>')
-                   .append('<span class="ihelp">Select week to display adjectives</span>'));
+                   .append('<span class="ihelp">Select week to show adjectives</span>'));
         var $d1 = $('<div class="chart clearfix">');
         $.each(oneWordInTime, function(key, value) {
             var $colouter = $('<div class="colouter floleft" data-word="'+w+'" data-week="'+value.week+'">')
