@@ -145,7 +145,8 @@ function getFilterValues() {
         weeksForOneWord.push({week: value, pos: 0, neg: 0})
     });
 
-    $("#product").val($("#product option:first").val());
+    //$("#product").val($("#product option:first").val());
+    $("#product").val("Dyson");
     $("#location").val($("#location option:last").val());
     $("#week").val($("#week option:first").val());
 };
