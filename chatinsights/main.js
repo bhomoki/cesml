@@ -146,7 +146,14 @@ function getFilterValues() {
     });
 
     //$("#product").val($("#product option:first").val());
-    $("#product").val("Dyson");
+    if (products.indexOf("Dyson") > -1)
+        $("#product").val("Dyson")
+    else {
+        if (products.indexOf("General") > -1)
+            $("#product").val("General")
+        else
+            $("#product").val($("#product option:first").val());
+    };
     $("#location").val($("#location option:last").val());
     $("#week").val($("#week option:first").val());
 };
