@@ -159,7 +159,7 @@ function filterData() {
             var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
             if (
                 computedWeek == week &&
-                value.countrycode == locationC && 
+                //value.countrycode == locationC && 
                 value.product == product
             ) {
                 if (value.nouns) {
@@ -276,7 +276,7 @@ function displayBubble(w1, w2) {
             var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
             if (
                 computedWeek == week &&
-                value.countrycode == locationC && 
+                //value.countrycode == locationC && 
                 value.product == product
             ) {
                 if (value.nouns) {
@@ -343,7 +343,7 @@ function displayWord(targetTable, thatWord, scrollToTop) {
         var computedWeek = momentStamp.year() + '_' + momentStamp.isoWeek();
         if (
             week == computedWeek &&
-            value.countrycode == locationC && 
+            //value.countrycode == locationC && 
             value.product == product
         ) {
             if (value.nouns) {
@@ -399,7 +399,7 @@ function collectWord(w) {
 
     $.each(allData, function(key, value) {
         if (
-            value.countrycode == locationC && 
+            //value.countrycode == locationC && 
             value.product == product
         ) {
             if (value.nouns) {
