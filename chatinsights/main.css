@@ -181,7 +181,7 @@ h2 {
     font-weight: 600
 }
 .bold {
-    font-weight: 700
+    font-weight: 700 !important
 }
 .high {
     background-color: #FDF1C9;
@@ -238,6 +238,12 @@ svg {
     display: block;
     font-weight: 300;
     margin-top: 16px;
+}
+.ihelp ~ .ihelp {
+    margin-top: 0
+}
+.red {
+    color: #FF8080;
 }
 *:focus {
     outline: none !important;

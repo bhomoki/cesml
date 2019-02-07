@@ -37,10 +37,13 @@ function initialize() {
         $('div#nodata').removeClass('hidden'); })
     .always(function() { 
     });
-    /*$('input.search').on('keypress',function(e) {
-        if (e.which == 13) {
-        }
-    });*/
+    $('input.search').on('keyup',function(e) {
+        if (e.target.value == '') {
+            searchWord = '';
+        };
+        //if (e.which == 13) {
+        //}
+    });
     $('input.search').on('search', function (e) {
         searchWord = e.target.value;
         updateFilters(true);
@@ -204,7 +207,9 @@ function displayData(source, outer) {
     if (outer == 'first') {
         $('div#first').empty().removeClass('invisible');
         $('#' + outer).append($('<h2>Chat words and sentiments ('+$("#week :selected").text()+')</h2>')
-                      .append('<span class="ihelp">Select word to reveal details</span>'));
+                      //.append(searchWord.length ? '<span class="ihelp bold">Searched for "'+searchWord+'"</span>' : '')
+                      .append($('<span class="ihelp">Select word to reveal details</span>')
+                            .prepend(searchWord.length ? '<span class="bold red">Searched for "'+searchWord+'".</span> ' : '') ));
     };
     if (outer == 'second') {
         $('#extrahr').removeClass('hidden');
@@ -268,6 +273,8 @@ function displayData(source, outer) {
         clearDisp();
         if (!mainWord.length) {
             $('div#first').empty();
+            $('div#nodata').find('.searched').remove();
+            if (searchWord.length) {$('div#nodata').prepend($('<span class="ihelp bold searched">Searched for "'+searchWord+'".</span>'))};
             $('div#nodata').removeClass('hidden');
         }
     };
