@@ -40,12 +40,14 @@ function initialize() {
     $('input.search').on('keyup',function(e) {
         if (e.target.value == '') {
             searchWord = '';
+            e.target.blur();
         };
         //if (e.which == 13) {
         //}
     });
     $('input.search').on('search', function (e) {
         searchWord = e.target.value;
+        e.target.blur();
         updateFilters(true);
     });
 };
