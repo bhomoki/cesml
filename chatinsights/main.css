@@ -367,7 +367,6 @@ input[type=week] {
     position: relative; top: 4px;
 }
 select {
-    max-width: 150px;
     padding-right: 26px;
     padding-left: 10px;
     line-height: 1;
@@ -586,12 +585,13 @@ div.sent div.values1 {
 div.sent div.values1 > div,
 .redbar, .greenbar {
     position: relative;
-    border-radius: 2px 2px 0 0;
-    width: 4px;
+    border-radius: 3px 3px 0 0;
+    width: 6px;
 }
 div.sent div.values1 > div:nth-child(1),
-.greenbar {
-    background-color: #5AACBC;
+.greenbar,
+.col .pval {
+    background-color: #5ABCAC;
 }
 div.sent div.values1 > div:nth-child(2),
 .redbar {
@@ -605,8 +605,8 @@ div.sent div.values1 > div span {
     right: 0; top: -9px;
     text-align: center;
     width: 11px;
-    -ms-transform: translateX(35%);
-    transform: translateX(35%);
+    -ms-transform: translateX(25%);
+    transform: translateX(25%);
     color: rgba(0, 0, 0, .5);
 }
 div.sent div.values1 > div span[data-v='0'] {
@@ -621,10 +621,10 @@ div.sent div.values1 > div {
     margin: 0;
 }
 div.sent div.values1 > div:nth-child(1) {
-    left: 20px;
+    left: 18px;
 }
 div.sent div.values1 > div:nth-child(2) {
-    right: 19px;
+    right: 17px;
 }
 
 
@@ -727,10 +727,9 @@ div:empty + div {
 }
 .col .pval,
 .col .nval {
-    background: #5AACBC;
     width: 48%;
     position: absolute; bottom: 0; left: 0;
-    border-radius: 8px 8px 3px 3px;   
+    border-radius: 9px 9px 3px 3px;   
 
 }
 .col .nval {
@@ -820,5 +819,8 @@ div:empty + div {
 @media only screen and (max-width: 640px) {
     div.sent > div {
         width: 48%;
-    }    
+    }
+    select {
+        max-width: 150px;
+    }
 }
