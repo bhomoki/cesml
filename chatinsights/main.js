@@ -209,9 +209,8 @@ function displayData(source, outer) {
     if (outer == 'first') {
         $('div#first').empty().removeClass('invisible');
         $('#' + outer).append($('<h2>Chat words and sentiments ('+$("#week :selected").text()+')</h2>')
-                      //.append(searchWord.length ? '<span class="ihelp bold">Searched for "'+searchWord+'"</span>' : '')
                       .append($('<span class="ihelp">Select word to reveal details</span>')
-                            .prepend(searchWord.length ? '<span class="bold red">Searched for "'+searchWord+'".</span> ' : '') ));
+                            .prepend(searchWord.length ? '<span class="bold bigger">Searched for "'+searchWord+'".</span> &nbsp;' : '') ));
     };
     if (outer == 'second') {
         $('#extrahr').removeClass('hidden');

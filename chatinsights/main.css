@@ -245,6 +245,9 @@ svg {
 .red {
     color: #FF8080;
 }
+.bigger {
+    font-size: 120%
+}
 *:focus {
     outline: none !important;
 }
@@ -607,7 +610,7 @@ div.sent div.values1 > div span {
     width: 11px;
     -ms-transform: translateX(25%);
     transform: translateX(25%);
-    color: rgba(0, 0, 0, .5);
+    color: rgba(0, 0, 0, .6);
 }
 div.sent div.values1 > div span[data-v='0'] {
     top: -8px;
@@ -821,6 +824,15 @@ div:empty + div {
         width: 48%;
     }
     select {
-        max-width: 150px;
+        max-width: 40vw;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .controls select {
+        font-size: 14px;
+    }
+    .controls select:last-of-type {
+        margin-right: 10px;
     }
 }
