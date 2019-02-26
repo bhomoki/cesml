@@ -258,7 +258,7 @@ function displayData(source, outer) {
                 .toggleClass('selected', mainWord === value.word)
                 .append(
                     $('<div class="label1 breakword"><span>'+value.word+(' &nbsp;<span class="sum">'+subsum+'</span>')+'</span></div>'),
-                    $('<div class="values1"><div style="height: '+getperc(biggestSum, value.pos)+'%"><span data-v="'+value.pos+'">'+value.pos+'</span></div><div style="height: '+getperc(biggestSum, value.neg)+'%"><span data-v="'+value.neg+'">'+value.neg+'</span></div></div>'))
+                    $('<div class="values1"><div style="width: '+getperc(biggestSum, value.pos)+'%"><span data-v="'+value.pos+'">'+value.pos+'</span></div><div style="width: '+getperc(biggestSum, value.neg)+'%"><span data-v="'+value.neg+'">'+value.neg+'</span></div></div>'))
                 .appendTo('#' + outer);
         }
     });

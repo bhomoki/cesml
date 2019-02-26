@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v2">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v2">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <title>Chat Insights</title>
+    <title>Feedback Explorer</title>
 
     <script src="moment.min.js"></script>
     <script src="jquery-3.2.1.min.js"></script>
@@ -47,7 +47,7 @@
 
     <div class="content clearfix">
 
-        <h1>Chat Insights</h1>
+        <h1>Feedback Explorer</h1>
         <p class="mrgbtm30">Select product, location and time-frame below.</p>
 
         <div class="controls clearfix">
@@ -55,9 +55,9 @@
             <select id="location" onchange="updateFilters(true)" class="hidden"></select>
             <select id="week" onchange="updateFilters(true)"></select>
             <div class="nowrap">
-                <label><input type="radio" name="sent" onclick="sentFilter(1)"><span class="greenbar"></span></label>
-                <label><input type="radio" name="sent" onclick="sentFilter(2)"><span class="redbar"></span></label>
-                <label><input type="radio" name="sent" onclick="sentFilter(0)" checked><span class="greenbar"></span><span class="redbar"></span></label>
+                <label><input type="radio" name="sent" onclick="sentFilter(1)"><span><span class="greenbar"></span></span></label>
+                <label><input type="radio" name="sent" onclick="sentFilter(2)"><span><span class="redbar"></span></span></label>
+                <label><input type="radio" name="sent" onclick="sentFilter(0)" checked><span><span class="greenbar"></span><span class="redbar"></span></span></label>
             </div>
         </div>
         <hr>
